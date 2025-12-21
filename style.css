@@ -5,7 +5,7 @@ body {
   background: #000;
   color: white;
   perspective: 1500px;
-  min-height: 200vh; /* scrollable */
+  min-height: 200vh; /* scrollable page */
 }
 
 /* ===== FULLSCREEN CANVAS ===== */
@@ -24,7 +24,7 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* center vertically in viewport */
+  min-height: 100svh; /* fix iPhone vertical centering */
   width: 100%;
   position: relative;
 }
@@ -147,3 +147,30 @@ canvas {
 body::-webkit-scrollbar { width: 12px; }
 body::-webkit-scrollbar-thumb { background-color: #00ffff; border-radius: 6px; }
 body::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+
+/* ===== MEDIA QUERIES FOR SMALL SCREENS ===== */
+@media (max-width: 500px) {
+  .profile-container {
+    width: 90%;
+    padding: 40px 25px;
+  }
+
+  .profile-img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .profile-name {
+    font-size: 32px;
+  }
+
+  .profile-subtitle {
+    font-size: 16px;
+  }
+
+  .social-icons a {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+}
