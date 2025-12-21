@@ -11,11 +11,33 @@ musicBtn.addEventListener('click', () => {
 // ===== PARTICLES =====
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = document.body.scrollHeight;
+const moneyCanvas = document.getElementById('moneyCanvas');
+const moneyCtx = moneyCanvas.getContext('2d');
+
+function resizeCanvases(){
+  canvas.width = window.innerWidth;
+  canvas.height = document.body.scrollHeight;
+  moneyCanvas.width = window.innerWidth;
+  moneyCanvas.height = document.body.scrollHeight;
+}
+window.addEventListener('resize', resizeCanvases);
+window.addEventListener('load', resizeCanvases);
+
+// ===== CENTER PROFILE CARD ON MOBILE =====
+function centerProfileCard() {
+  const wrapper = document.querySelector('.page-wrapper');
+  const card = document.querySelector('.profile-container');
+  const vh = window.innerHeight;
+  const cardHeight = card.offsetHeight;
+  wrapper.style.paddingTop = ((vh - cardHeight) / 2) + 'px';
+}
+window.addEventListener('load', centerProfileCard);
+window.addEventListener('resize', centerProfileCard);
+
+// ===== PARTICLES ANIMATION =====
 const particles = [];
 for (let i = 0; i < 300; i++) {
-  particles.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*4+1, speed: Math.random()*0.8+0.2, color: `hsl(${Math.random()*360},100%,60%)`, layer: Math.random()*2+1});
+  particles.push({x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, size: Math.random()*4+1, speed: Math.random()*0.8+0.2, color: `hsl(${Math.random()*360},100%,60%)`, layer: Math.random()*2+1});
 }
 function animateParticles(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -32,10 +54,6 @@ function animateParticles(){
 animateParticles();
 
 // ===== ORBITING MONEY =====
-const moneyCanvas = document.getElementById('moneyCanvas');
-const moneyCtx = moneyCanvas.getContext('2d');
-moneyCanvas.width = window.innerWidth;
-moneyCanvas.height = document.body.scrollHeight;
 const profileX = window.innerWidth/2;
 const profileY = window.innerHeight/2 - 50;
 const bills = [];
@@ -60,13 +78,3 @@ function drawMoneyOrbit(){
   requestAnimationFrame(drawMoneyOrbit);
 }
 drawMoneyOrbit();
-
-// ===== RESIZE =====
-function updateCanvasSize() {
-  canvas.width = window.innerWidth;
-  canvas.height = document.body.scrollHeight;
-  moneyCanvas.width = window.innerWidth;
-  moneyCanvas.height = document.body.scrollHeight;
-}
-window.addEventListener('resize', updateCanvasSize);
-window.addEventListener('load', updateCanvasSize);
