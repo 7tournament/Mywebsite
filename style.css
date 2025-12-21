@@ -5,7 +5,7 @@ body {
   background: #000;
   color: white;
   perspective: 1500px;
-  min-height: 200vh; /* make page scrollable */
+  min-height: 200vh; /* scrollable */
 }
 
 /* ===== FULLSCREEN CANVAS ===== */
@@ -19,17 +19,22 @@ canvas {
   display: block;
 }
 
-/* ===== CENTER WRAPPER ===== */
-.center-wrapper {
-  position: relative; /* now scrollable */
-  top: 50%;           /* will adjust with margin-top if needed */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
+/* ===== PAGE WRAPPER (flex centering) ===== */
+.page-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh; /* center vertically in viewport */
+  width: 100%;
+  position: relative;
+}
+
+/* ===== CENTER WRAPPER ===== */
+.center-wrapper {
+  display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ===== PROFILE CONTAINER 3D ===== */
@@ -46,7 +51,6 @@ canvas {
   box-shadow: 0 0 60px rgba(0,255,255,0.6), inset 0 0 35px rgba(0,255,255,0.2);
   transform-style: preserve-3d;
   transition: transform 0.2s ease;
-  margin: 150px auto; /* gives top spacing for scroll */
 }
 .profile-container:hover {
   transform: rotateY(10deg) rotateX(5deg) scale(1.05);
@@ -139,7 +143,7 @@ canvas {
   box-shadow: 0 0 50px #00ffff, 0 0 70px #0066ff;
 }
 
-/* ===== OPTIONAL: SCROLL EFFECT ===== */
+/* ===== SCROLLBAR STYLE ===== */
 body::-webkit-scrollbar { width: 12px; }
 body::-webkit-scrollbar-thumb { background-color: #00ffff; border-radius: 6px; }
 body::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
