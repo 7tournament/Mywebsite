@@ -1,0 +1,145 @@
+/* ===== RESET & BODY ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: #000;
+  color: white;
+  perspective: 1500px;
+  min-height: 200vh; /* make page scrollable */
+}
+
+/* ===== FULLSCREEN CANVAS ===== */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  display: block;
+}
+
+/* ===== CENTER WRAPPER ===== */
+.center-wrapper {
+  position: relative; /* now scrollable */
+  top: 50%;           /* will adjust with margin-top if needed */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* ===== PROFILE CONTAINER 3D ===== */
+.profile-container {
+  width: 360px;
+  max-width: 90%;
+  text-align: center;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  background: rgba(0,0,0,0.4);
+  padding: 50px 40px;
+  border-radius: 32px;
+  border: 2px solid rgba(0,255,255,0.5);
+  box-shadow: 0 0 60px rgba(0,255,255,0.6), inset 0 0 35px rgba(0,255,255,0.2);
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease;
+  margin: 150px auto; /* gives top spacing for scroll */
+}
+.profile-container:hover {
+  transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+}
+
+/* ===== PROFILE IMAGE ===== */
+.profile-img {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 40px #00ffff, 0 0 80px #0066ff;
+  margin-bottom: 20px;
+  object-fit: cover;
+  position: relative;
+  z-index: 4;
+  transform: translateZ(50px);
+}
+
+/* ===== NAME ===== */
+.profile-name {
+  font-size: 46px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  background: linear-gradient(90deg,#00ffff,#0066ff,#25F4EE,#FE2C55);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px #00ffff, 0 0 40px #0066ff, 0 0 60px #25F4EE;
+  transform: translateZ(40px);
+}
+
+/* ===== DESCRIPTION ===== */
+.profile-subtitle {
+  font-size: 20px;
+  color: #00ffcc;
+  text-shadow: 0 0 15px #00ffff, 0 0 25px #0066ff;
+  margin-bottom: 15px;
+  line-height: 1.6;
+  transform: translateZ(30px);
+}
+
+/* ===== SOCIAL ICONS ===== */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+  transform: translateZ(25px);
+}
+.social-icons a {
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  font-size: 28px;
+  box-shadow: 0 0 30px rgba(0,255,255,0.7);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.social-icons a:hover {
+  transform: scale(1.5) rotate(10deg);
+  box-shadow: 0 0 60px rgba(0,255,255,1), 0 0 40px #00ffff;
+}
+.tiktok { background: linear-gradient(45deg,#25F4EE,#FE2C55); }
+.instagram { background: radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285AEB 90%); }
+.discord { background: #7289da; }
+.social-icons svg { width: 34px; height: 34px; fill: white; }
+
+/* ===== MUSIC BUTTON ===== */
+#musicBtn {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  z-index: 5;
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  background: #00ffff;
+  color: #000;
+  cursor: pointer;
+  box-shadow: 0 0 25px #00ffff, 0 0 40px #0066ff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+#musicBtn:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 50px #00ffff, 0 0 70px #0066ff;
+}
+
+/* ===== OPTIONAL: SCROLL EFFECT ===== */
+body::-webkit-scrollbar { width: 12px; }
+body::-webkit-scrollbar-thumb { background-color: #00ffff; border-radius: 6px; }
+body::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
