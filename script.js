@@ -1,21 +1,21 @@
-// Music Controls
+// ===== MUSIC CONTROLS =====
 const music = document.getElementById('bgMusic');
 const musicBtn = document.getElementById('musicBtn');
 music.volume = 0.5;
-music.play().catch(()=>{ window.addEventListener('click',()=>music.play()); });
-musicBtn.addEventListener('click',()=>{
-  if(music.paused){ music.play(); musicBtn.textContent="Pause Music"; }
-  else{ music.pause(); musicBtn.textContent="Play Music"; }
+music.play().catch(() => { window.addEventListener('click', () => music.play()); });
+musicBtn.addEventListener('click', () => {
+  if (music.paused) { music.play(); musicBtn.textContent = "Pause Music"; }
+  else { music.pause(); musicBtn.textContent = "Play Music"; }
 });
 
-// Particles
+// ===== PARTICLES =====
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.height = document.body.scrollHeight;
 const particles = [];
-for(let i=0;i<300;i++){
-  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*4+1,speed:Math.random()*0.8+0.2,color:`hsl(${Math.random()*360},100%,60%)`,layer:Math.random()*2+1});
+for (let i = 0; i < 300; i++) {
+  particles.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*4+1, speed: Math.random()*0.8+0.2, color: `hsl(${Math.random()*360},100%,60%)`, layer: Math.random()*2+1});
 }
 function animateParticles(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -31,11 +31,11 @@ function animateParticles(){
 }
 animateParticles();
 
-// Orbiting 3D money
+// ===== ORBITING MONEY =====
 const moneyCanvas = document.getElementById('moneyCanvas');
 const moneyCtx = moneyCanvas.getContext('2d');
 moneyCanvas.width = window.innerWidth;
-moneyCanvas.height = window.innerHeight;
+moneyCanvas.height = document.body.scrollHeight;
 const profileX = window.innerWidth/2;
 const profileY = window.innerHeight/2 - 50;
 const bills = [];
@@ -61,10 +61,12 @@ function drawMoneyOrbit(){
 }
 drawMoneyOrbit();
 
-// Responsive resize
-window.addEventListener('resize',()=>{
+// ===== RESIZE =====
+function updateCanvasSize() {
   canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.height = document.body.scrollHeight;
   moneyCanvas.width = window.innerWidth;
-  moneyCanvas.height = window.innerHeight;
-});
+  moneyCanvas.height = document.body.scrollHeight;
+}
+window.addEventListener('resize', updateCanvasSize);
+window.addEventListener('load', updateCanvasSize);
