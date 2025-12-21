@@ -23,8 +23,7 @@ canvas {
 .page-wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100svh; /* fix iPhone vertical centering */
+  align-items: flex-start; /* start, JS will add padding-top dynamically */
   width: 100%;
   position: relative;
 }
