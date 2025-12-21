@@ -1,80 +1,150 @@
-// ===== MUSIC CONTROLS =====
-const music = document.getElementById('bgMusic');
-const musicBtn = document.getElementById('musicBtn');
-music.volume = 0.5;
-music.play().catch(() => { window.addEventListener('click', () => music.play()); });
-musicBtn.addEventListener('click', () => {
-  if (music.paused) { music.play(); musicBtn.textContent = "Pause Music"; }
-  else { music.pause(); musicBtn.textContent = "Play Music"; }
-});
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-// ===== PARTICLES =====
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas.getContext('2d');
-const moneyCanvas = document.getElementById('moneyCanvas');
-const moneyCtx = moneyCanvas.getContext('2d');
+/* BODY */
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: black;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
 
-function resizeCanvases(){
-  canvas.width = window.innerWidth;
-  canvas.height = document.body.scrollHeight;
-  moneyCanvas.width = window.innerWidth;
-  moneyCanvas.height = document.body.scrollHeight;
+/* CANVAS */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
 }
-window.addEventListener('resize', resizeCanvases);
-window.addEventListener('load', resizeCanvases);
 
-// ===== CENTER PROFILE CARD ON MOBILE =====
-function centerProfileCard() {
-  const wrapper = document.querySelector('.page-wrapper');
-  const card = document.querySelector('.profile-container');
-  const vh = window.innerHeight;
-  const cardHeight = card.offsetHeight;
-  wrapper.style.paddingTop = ((vh - cardHeight) / 2) + 'px';
-}
-window.addEventListener('load', centerProfileCard);
-window.addEventListener('resize', centerProfileCard);
+/* CENTER WRAPPER */
+.page-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100vh;
 
-// ===== PARTICLES ANIMATION =====
-const particles = [];
-for (let i = 0; i < 300; i++) {
-  particles.push({x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, size: Math.random()*4+1, speed: Math.random()*0.8+0.2, color: `hsl(${Math.random()*360},100%,60%)`, layer: Math.random()*2+1});
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-function animateParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size*p.layer,0,Math.PI*2);
-    ctx.fillStyle=p.color;
-    ctx.fill();
-    p.y -= p.speed;
-    if(p.y<0) p.y=canvas.height;
-  });
-  requestAnimationFrame(animateParticles);
-}
-animateParticles();
 
-// ===== ORBITING MONEY =====
-const profileX = window.innerWidth/2;
-const profileY = window.innerHeight/2 - 50;
-const bills = [];
-for(let i=0;i<50;i++){
-  bills.push({radius:90+Math.random()*100,angle:Math.random()*Math.PI*2,speed:0.01+Math.random()*0.02,size:20+Math.random()*18,yOffset:(Math.random()-0.5)*60,fallSpeed:0.5+Math.random()*1});
+/* PROFILE CARD */
+.profile-container {
+  width: 360px;
+  max-width: 90%;
+  padding: 45px 35px;
+  border-radius: 28px;
+
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(25px);
+
+  border: 2px solid rgba(0,255,255,0.5);
+  box-shadow:
+    0 0 60px rgba(0,255,255,0.6),
+    inset 0 0 25px rgba(0,255,255,0.2);
+
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease;
 }
-function drawMoneyOrbit(){
-  moneyCtx.clearRect(0,0,moneyCanvas.width,moneyCanvas.height);
-  bills.forEach(bill=>{
-    bill.angle += bill.speed;
-    const x = profileX + Math.cos(bill.angle) * bill.radius;
-    bill.yOffset += bill.fallSpeed;
-    if(bill.yOffset>200) bill.yOffset=-200;
-    const y = profileY + Math.sin(bill.angle) * bill.radius + bill.yOffset;
-    moneyCtx.save();
-    moneyCtx.translate(x,y);
-    moneyCtx.rotate(bill.angle*0.5);
-    moneyCtx.font = bill.size+"px Arial";
-    moneyCtx.fillText("💵",-bill.size/2,0);
-    moneyCtx.restore();
-  });
-  requestAnimationFrame(drawMoneyOrbit);
+
+.profile-container:hover {
+  transform: rotateY(8deg) rotateX(5deg) scale(1.05);
 }
-drawMoneyOrbit();
+
+/* PROFILE IMAGE */
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 40px #00ffff, 0 0 80px #0066ff;
+
+  margin-bottom: 20px;
+}
+
+/* NAME */
+.profile-name {
+  font-size: 38px;
+  font-weight: 700;
+
+  background: linear-gradient(90deg,#00ffff,#0066ff,#25F4EE,#FE2C55);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 0 30px #00ffff;
+  margin-bottom: 12px;
+}
+
+/* DESCRIPTION */
+.profile-subtitle {
+  font-size: 16px;
+  color: #00ffcc;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* SOCIAL ICONS */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.social-icons a {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+
+  box-shadow: 0 0 25px rgba(0,255,255,0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.4);
+  box-shadow: 0 0 50px rgba(0,255,255,1);
+}
+
+.tiktok { background: linear-gradient(45deg,#25F4EE,#FE2C55); }
+.instagram { background: radial-gradient(circle at 30% 107%,#fdf497,#fd5949,#d6249f,#285AEB); }
+.discord { background: #7289da; }
+
+/* MUSIC BUTTON */
+#musicBtn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 5;
+
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+
+  background: #00ffff;
+  color: black;
+
+  box-shadow: 0 0 30px #00ffff;
+}
