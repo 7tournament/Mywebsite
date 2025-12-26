@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Griffith Boosts</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f1a;
+  --accent:#3aa0ff;
+  --card:rgba(15,20,40,0.95);
+  --border:#445;
+  --text:#ffffff;
+  --sidebar-bg: linear-gradient(135deg,#0b0f1a,#1a1f2a);
+  --sidebar-text: #ffffff;
+  --sidebar-hover: var(--accent);
+}
+*{box-sizing:border-box;margin:0;padding:0;transition:all .6s ease}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:20px;overflow-x:hidden;font-size:16px;}
+canvas{position:fixed;inset:0;z-index:-1}
+
+/* Sidebar */
+#sidebar{
+  position:fixed;left:0;top:0;width:250px;height:100%;background: var(--sidebar-bg);
+  box-shadow:5px 0 25px rgba(0,0,0,0.8);border-right:2px solid var(--accent);
+  border-radius:0 20px 20px 0;transform: translateX(-250px);transition: transform 0.5s ease;z-index:1000;
+}
+body.sidebar-open #sidebar{transform: translateX(0);}
+#sidebar ul{list-style:none;padding:60px 20px 0 20px;}
+#sidebar ul li{
+  padding:18px 12px;margin-bottom:15px;font-family:'Orbitron',sans-serif;
+  font-weight:700;color: var(--sidebar-text);border-radius:12px;cursor:pointer;transition:0.3s;
+}
+#sidebar ul li:hover,
+#sidebar ul li.active {
+  background: var(--sidebar-hover);
+  color: var(--sidebar-active-text);
+}
+#hamburger{
+  position:fixed;top:20px;left:20px;width:35px;height:30px;display:flex;flex-direction:column;
+  justify-content:space-between;cursor:pointer;z-index:1100;
+}
+#hamburger .line{width:100%;height:5px;background:var(--accent);border-radius:3px;}
+
+/* Support Bar */
+.support-bar{
+  display:block;text-align:center;padding:16px;border-radius:18px;
+  background:linear-gradient(90deg,var(--accent),#09162f);
+  font-family:'Orbitron',sans-serif;color:#fff;box-shadow:0 10px 25px rgba(0,0,0,.6);
+  text-decoration:none;margin-bottom:20px;
+}
+.support-bar:hover{transform:translateY(-2px)}
+
+/* Header */
+.header{text-align:center;margin:30px 0;}
+.title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,36px);color:var(--accent);text-shadow:0 0 25px var(--accent);}
+.subtitle{color:#cce0ff;margin-top:6px}
+
+/* Controls */
+.controls{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:25px;}
+.controls div{flex:1 1 200px}
+label{font-family:'Orbitron',sans-serif;font-weight:700}
+select,input,textarea{width:100%;margin-top:6px;padding:12px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:#fff;font-family:'Orbitron',sans-serif;font-size:14px;min-width:200px;}
+textarea{resize:none;min-height:45px}
+.minmax{font-size:12px;color:#aaa;text-align:right;font-family:'Inter',sans-serif;margin-top:3px;}
+.warning{font-size:12px;color:#ff4d4d;text-align:right;font-family:'Inter',sans-serif;}
+
+/* Stats Grid */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;margin-bottom:30px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:26px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,.6);}
+.card span{font-family:'Orbitron',sans-serif;font-size:clamp(20px,4vw,30px);color:var(--accent);}
+
+/* Order Config */
+.order-config{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,.6);margin-bottom:30px;}
+.order-config h3{font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:20px;}
+.order-config label{margin-top:18px;display:block}
+.price-box{margin-top:12px;padding:12px;border-radius:12px;background:var(--card);border:1px solid var(--border);font-family:'Orbitron',sans-serif;color:var(--accent);}
+#whatsappOrder{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;padding:15px;border-radius:16px;background:#25D366;color:#000;font-family:'Orbitron',sans-serif;font-weight:700;text-decoration:none;}
+#whatsappOrder img{width:22px}
+
+/* Footer */
+footer{margin-top:40px;padding:25px;text-align:center;background:var(--card);border-radius:20px;border:1px solid var(--border);}
+footer a{color:var(--accent);text-decoration:none}
+
+/* Main content container */
+.main-content{max-width:1200px;margin:0 auto;padding:0 20px;}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+  <ul>
+    <li class="active" onclick="location.href='index.html'">📦 Order Page</li>
+    <li onclick="location.href='faq.html'">❓ FAQ</li>
+    <li onclick="location.href='ai.html'">🤖 AI Chatbot</li>
+    <li onclick="location.href='about.html'">ℹ️ About Us</li>
+  </ul>
+</div>
+<div id="hamburger">
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+</div>
+
+<canvas id="space"></canvas>
+
+<div class="main-content">
+<a class="support-bar" target="_blank" href="https://wa.me/923159180748?text=I%20need%20help%20regarding%20Griffith%20boosts.">
+📞 Need Support? Click Here
+</a>
+
+<div class="header">
+  <div class="title">👑 GRIFFITH BOOSTS</div>
+  <div class="subtitle">Premium Social Media Growth Services</div>
+</div>
+
+<div class="controls">
+  <div>
+    <label>💰 Currency</label>
+    <select id="currency">
+      <option value="USD">🇺🇸 USD</option>
+      <option value="PKR">🇵🇰 PKR</option>
+      <option value="EUR">🇪🇺 EUR</option>
+      <option value="IRR">🇮🇷 IRR</option>
+      <option value="AFN">🇦🇫 AFN</option>
+    </select>
+  </div>
+  <div>
+    <label>🎨 Theme</label>
+    <select id="theme">
+      <option value="space">🌌 Space 3D</option>
+      <option value="cybergreen">💚 Cyber Green</option>
+      <option value="purple">💜 Purple Glow</option>
+      <option value="ocean">🌊 Ocean Blue</option>
+      <option value="emerald">💎 Emerald Green</option>
+    </select>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="card"><span>🚀 99+</span><p>Orders</p></div>
+  <div class="card"><span>⭐ 99.8%</span><p>Satisfaction</p></div>
+  <div class="card"><span>⏱ 1–2h</span><p>Delivery</p></div>
+  <div class="card"><span>💬 24/7</span><p>Support</p></div>
+</div>
+
+<div class="order-config">
+<h3>🛒 Order Configuration</h3>
+
+<label>📦 Service</label>
+<select id="service">
+  <optgroup label="🎵 TikTok Boosts">
+    <option value="tt-followers">👥 TikTok Followers</option>
+    <option value="tt-likes">❤️ TikTok Likes</option>
+    <option value="tt-views">👁️ TikTok Views</option>
+    <option value="tt-comments">💬 TikTok Comments</option>
+    <option value="tt-shares">🔗 TikTok Shares</option>
+  </optgroup>
+  <optgroup label="📸 Instagram Boosts">
+    <option value="ig-followers">👥 Instagram Followers</option>
+    <option value="ig-likes">❤️ Instagram Likes</option>
+    <option value="ig-comments">💬 Instagram Comments</option>
+    <option value="ig-views">👁️ Instagram Views</option>
+    <option value="ig-story">📖 Instagram Story Views</option>
+    <option value="ig-reels">🎬 Instagram Reels Views</option>
+  </optgroup>
+  <optgroup label="📘 Facebook Boosts">
+    <option value="fb-followers">👥 Facebook Followers</option>
+    <option value="fb-likes">👍 Facebook Likes</option>
+    <option value="fb-comments">💬 Facebook Comments</option>
+    <option value="fb-shares">🔗 Facebook Shares</option>
+    <option value="fb-page-likes">🏷️ Facebook Page Likes</option>
+    <option value="fb-reactions">❤️ Reactions in Post</option>
+  </optgroup>
+  <optgroup label="▶️ YouTube Boosts">
+    <option value="yt-subscribers">👥 YouTube Subscribers</option>
+    <option value="yt-likes">👍 YouTube Likes</option>
+    <option value="yt-comments">💬 YouTube Comments</option>
+    <option value="yt-views">👁️ YouTube Views</option>
+    <option value="yt-shares">🔗 YouTube Shares</option>
+  </optgroup>
+  <optgroup label="🐦 Other Services">
+    <option value="twitter">🐦 Twitter Followers/Likes/Retweets</option>
+    <option value="spotify">🎵 Spotify Followers</option>
+    <option value="telegram">✉️ Telegram Members</option>
+  </optgroup>
+</select>
+
+<label>📝 Description</label>
+<textarea id="desc" readonly></textarea>
+
+<label>⚙️ Quality</label>
+<select id="quality">
+<option value="standard">⭐ Standard</option>
+<option value="high">🔥 High</option>
+<option value="ultra">💎 Ultra Premium</option>
+</select>
+<textarea id="qualityDesc" readonly></textarea>
+
+<label>🔢 Quantity</label>
+<input type="number" id="quantity" placeholder="Enter quantity">
+<div class="minmax" id="minmax"></div>
+<div class="warning" id="warn"></div>
+
+<label>🔗 Link</label>
+<input type="text" id="link" placeholder="Paste profile or video link">
+
+<label>🎁 Discount Code</label>
+<textarea id="discount" placeholder="If you don’t have discount code you can leave it blank"></textarea>
+
+<div class="price-box" id="per1k"></div>
+<div class="price-box" id="total"></div>
+
+<a id="whatsappOrder" target="_blank">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"> Order via WhatsApp
+</a>
+</div>
+
+<footer>
+<p>© All Rights Reserved – Griffith BOOSTS</p>
+<p>Contact us: <a target="_blank" href="https://wa.me/923159180748?text=I%20need%20help%20regarding%20DeyDn%20boosts.">+92 315 9180748</a></p>
+</footer>
+
+<script>
+// 3D Star Background
+const c=document.getElementById("space"),ctx=c.getContext("2d");
+let w,h,s=[],starColor="#3aa0ff";
+function resize(){w=c.width=innerWidth;h=c.height=innerHeight;}
+addEventListener("resize",resize);resize();
+for(let i=0;i<350;i++)s.push({x:Math.random()*w,y:Math.random()*h,z:Math.random()*w});
+function anim(){ctx.fillStyle=getComputedStyle(document.body).backgroundColor;ctx.fillRect(0,0,w,h);
+s.forEach(e=>{e.z-=0.6;if(e.z<=0)e.z=w;let sx=(e.x-w/2)*(w/e.z)+w/2;let sy=(e.y-h/2)*(w/e.z)+h/2;ctx.fillStyle=starColor;ctx.fillRect(sx,sy,2,2);});
+requestAnimationFrame(anim);}
+anim();
+
+// Services & Rates
+const services={
+"tt-followers":{min:50,max:100000,price:{standard:2,high:4,ultra:7},desc:"Real TikTok followers"},
+"tt-likes":{min:50,max:100000,price:{standard:0.70,high:2,ultra:5},desc:"TikTok likes boost"},
+"tt-views":{min:10000,max:10000000,price:{standard:0.40,high:2,ultra:3},desc:"TikTok views"},
+"tt-comments":{min:50,max:100000,price:{standard:0.80,high:2,ultra:6},desc:"TikTok comments"},
+"tt-shares":{min:50,max:100000,price:{standard:0.40,high:1,ultra:3},desc:"TikTok shares"},
+"ig-followers":{min:50,max:100000,price:{standard:2,high:4,ultra:7},desc:"Instagram followers"},
+"ig-likes":{min:50,max:100000,price:{standard:0.50,high:2,ultra:4},desc:"Instagram likes"},
+"ig-comments":{min:50,max:100000,price:{standard:0.70,high:2,ultra:5},desc:"Instagram comments"},
+"ig-views":{min:10000,max:10000000,price:{standard:0.50,high:1,ultra:3},desc:"Instagram views"},
+"ig-story":{min:10000,max:10000000,price:{standard:0.70,high:2,ultra:5.3},desc:"Instagram story views"},
+"ig-reels":{min:10000,max:10000000,price:{standard:0.50,high:2,ultra:5},desc:"Instagram reels views"},
+"fb-followers":{min:50,max:100000,price:{standard:1.72,high:3.4,ultra:7},desc:"Facebook followers"},
+"fb-likes":{min:50,max:100000,price:{standard:0.50,high:0.90,ultra:2},desc:"Facebook likes"},
+"fb-comments":{min:50,max:100000,price:{standard:1,high:2,ultra:3},desc:"Facebook comments"},
+"fb-shares":{min:50,max:100000,price:{standard:1,high:2,ultra:3},desc:"Facebook shares"},
+"fb-page-likes":{min:50,max:100000,price:{standard:1,high:2,ultra:3},desc:"Facebook page likes"},
+"fb-reactions":{min:50,max:100000,price:{standard:1,high:2,ultra:3},desc:"Facebook post reactions"},
+"yt-subscribers":{min:50,max:100000,price:{standard:2,high:4,ultra:7},desc:"YouTube subscribers"},
+"yt-likes":{min:50,max:100000,price:{standard:0.89,high:1.15,ultra:3.3},desc:"YouTube likes"},
+"yt-comments":{min:50,max:100000,price:{standard:0.90,high:2,ultra:3},desc:"YouTube comments"},
+"yt-views":{min:5000,max:10000000,price:{standard:0.60,high:2,ultra:3},desc:"YouTube views"},
+"yt-shares":{min:50,max:100000,price:{standard:0.70,high:2,ultra:3},desc:"YouTube shares"},
+"twitter":{min:50,max:100000,price:{standard:2,high:4,ultra:7},desc:"Twitter followers/likes/retweets"},
+"spotify":{min:50,max:100000,price:{standard:2,high:4,ultra:7},desc:"Spotify followers"},
+"telegram":{min:50,max:100000,price:{standard:2,high:4,ultra:7},desc:"Telegram members"}
+};
+const rates={USD:1,PKR:285,EUR:0.92,IRR:42000,AFN:85};
+
+// DOM Elements
+const serviceSelect = document.getElementById("service");
+const qualitySelect = document.getElementById("quality");
+const quantity = document.getElementById("quantity");
+const currencySelectElem = document.getElementById("currency");
+const descBox = document.getElementById("desc");
+const qualityDesc = document.getElementById("qualityDesc");
+const minmaxBox = document.getElementById("minmax");
+const warnBox = document.getElementById("warn");
+const per1kBox = document.getElementById("per1k");
+const totalBox = document.getElementById("total");
+const linkBox = document.getElementById("link");
+const waBtn = document.getElementById("whatsappOrder");
+const themeSelect = document.getElementById("theme");
+const body = document.body;
+
+// Sidebar toggle
+const hamburger = document.getElementById("hamburger");
+hamburger.addEventListener("click", () => body.classList.toggle("sidebar-open"));
+
+// Theme changer
+themeSelect.addEventListener("change", () => {
+    const theme = themeSelect.value;
+    switch(theme){
+        case "space":
+            document.documentElement.style.setProperty("--bg","#0b0f1a");
+            document.documentElement.style.setProperty("--accent","#3aa0ff");
+            document.documentElement.style.setProperty("--card","rgba(15,20,40,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#0b0f1a,#1a1f2a)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
+            document.documentElement.style.setProperty("--sidebar-hover","#3aa0ff");
+            starColor = "#3aa0ff";
+            break;
+        case "cybergreen":
+            document.documentElement.style.setProperty("--bg","#001f0f");
+            document.documentElement.style.setProperty("--accent","#00ff99");
+            document.documentElement.style.setProperty("--card","rgba(0,20,10,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f0f,#003320)");
+            document.documentElement.style.setProperty("--sidebar-text","#00ff99");
+            document.documentElement.style.setProperty("--sidebar-hover","#00ff99");
+            starColor = "#00ff99";
+            break;
+        case "purple":
+            document.documentElement.style.setProperty("--bg","#1a001f");
+            document.documentElement.style.setProperty("--accent","#bb00ff");
+            document.documentElement.style.setProperty("--card","rgba(20,0,40,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#1a001f,#400040)");
+            document.documentElement.style.setProperty("--sidebar-text","#bb00ff");
+            document.documentElement.style.setProperty("--sidebar-hover","#bb00ff");
+            starColor = "#bb00ff";
+            break;
+        case "ocean":
+            document.documentElement.style.setProperty("--bg","#001f2f");
+            document.documentElement.style.setProperty("--accent","#00ccff");
+            document.documentElement.style.setProperty("--card","rgba(0,15,40,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f2f,#003b5f)");
+            document.documentElement.style.setProperty("--sidebar-text","#00ccff");
+            document.documentElement.style.setProperty("--sidebar-hover","#00ccff");
+            starColor = "#00ccff";
+            break;
+        case "emerald":
+            document.documentElement.style.setProperty("--bg","#001f1a");
+            document.documentElement.style.setProperty("--accent","#00ff88");
+            document.documentElement.style.setProperty("--card","rgba(0,30,20,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f1a,#003322)");
+            document.documentElement.style.setProperty("--sidebar-text","#00ff88");
+            document.documentElement.style.setProperty("--sidebar-hover","#00ff88");
+            starColor = "#00ff88";
+            break;
+    }
+});
+// Update descriptions and min/max when service changes
+function updateService(){
+    const serv = serviceSelect.value;
+    descBox.value = services[serv].desc;
+    minmaxBox.textContent = `Min: ${services[serv].min} | Max: ${services[serv].max}`;
+    updatePrice();
+}
+serviceSelect.addEventListener("change", updateService);
+
+// Update quality description
+function updateQuality(){
+    const q = qualitySelect.value;
+    switch(q){
+        case "standard": qualityDesc.value = "⭐ best quality | 1-17 hours delivery | no refill | possible drop"; break;
+        case "high": qualityDesc.value = "🔥 good quality | 1-8 hours delivery | 7 day refill | lowest drop"; break;
+        case "ultra": qualityDesc.value = "💎 best quality | 1-2 hours delivery | lifetime refill | no drop"; break;
+    }
+    updatePrice();
+}
+qualitySelect.addEventListener("change", updateQuality);
+
+// Price calculation
+function updatePrice(){
+    const serv = serviceSelect.value;
+    const q = qualitySelect.value;
+    const curr = currencySelectElem.value;
+    let qty = parseInt(quantity.value) || 0;
+    const min = services[serv].min;
+    const max = services[serv].max;
+
+    if(qty < min){
+        warnBox.textContent = `Minimum quantity is ${min}`;
+    } else if(qty > max){
+        warnBox.textContent = `Maximum quantity is ${max}`;
+    } else{
+        warnBox.textContent = "";
+    }
+
+    let pricePer1k = services[serv].price[q];
+    let totalPrice = (qty/1000) * pricePer1k * rates[curr];
+    let pricePer1kConverted = pricePer1k * rates[curr];
+
+per1kBox.textContent = `Price per 1k: ${curr} ${pricePer1kConverted.toFixed(2)}`;
+    totalBox.textContent = `Total Price: ${curr} ${totalPrice.toFixed(2)}`;
+}
+quantity.addEventListener("input", updatePrice);
+currencySelectElem.addEventListener("change", updatePrice);
+
+// WhatsApp order message
+waBtn.addEventListener("click", () => {
+    const servName = serviceSelect.options[serviceSelect.selectedIndex].text;
+    const qty = quantity.value || services[serviceSelect.value].min;
+    const qual = qualitySelect.options[qualitySelect.selectedIndex].text;
+    const link = linkBox.value || "No link provided";
+    const curr = currencySelectElem.value;
+    const total = totalBox.textContent.split(":")[1].trim();
+    const orderNum = Math.floor(Math.random()*900)+100; // random 100-999
+
+    const message = 
+`Griffith boosts new order:
+Order #${orderNum}
+
+Service: ${servName}
+Quantity: ${qty}
+Quality: ${qual}
+Link: ${link}
+Price: ${total}
+
+Please wait 1-2 hours to get your order processed
+
+Warning: do not change/edit this message
+
+Thanks for ordering! (:`;
+
+    const waLink = `https://wa.me/923159180748?text=${encodeURIComponent(message)}`;
+    waBtn.setAttribute("href", waLink);
+});
+    
+// Initialize defaults
+updateService();
+updateQuality();
+updatePrice();
+
+// Sidebar section clicks redirect to respective pages
+document.querySelectorAll("#sidebar ul li").forEach(li => {
+    li.addEventListener("click", () => {
+        const section = li.textContent.trim();
+        switch(section){
+            case "📦 Order Page":
+                window.location.href = "index.html";
+                break;
+            case "❓ FAQ":
+                window.location.href = "faq.html";
+                break;
+            case "🤖 AI Chatbot":
+                window.location.href = "ai.html";
+                break;
+            case "ℹ️ About Us":
+                window.location.href = "about.html";
+                break;
+        }
+    });
+});
+</script>
+
+</body>
+</html>

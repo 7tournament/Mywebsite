@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Griffith Boosts - FAQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f1a;
+  --accent:#3aa0ff;
+  --card:rgba(15,20,40,0.95);
+  --border:#445;
+  --text:#ffffff;
+  --sidebar-bg: linear-gradient(135deg,#0b0f1a,#1a1f2a);
+  --sidebar-text: #ffffff;
+  --sidebar-hover: var(--accent);
+}
+*{box-sizing:border-box;margin:0;padding:0;transition:all .6s ease}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:20px;overflow-x:hidden;font-size:16px;}
+canvas{position:fixed;inset:0;z-index:-1}
+
+/* Sidebar */
+#sidebar{
+  position:fixed;left:0;top:0;width:250px;height:100%;background: var(--sidebar-bg);
+  box-shadow:5px 0 25px rgba(0,0,0,0.8);border-right:2px solid var(--accent);border-radius:0 20px 20px 0;
+  transform: translateX(-250px);transition: transform 0.5s ease;z-index:1000;
+}
+body.sidebar-open #sidebar{transform: translateX(0);}
+#sidebar ul{list-style:none;padding:60px 20px 0 20px;}
+#sidebar ul li{
+  padding:18px 12px;margin-bottom:15px;font-family:'Orbitron',sans-serif;font-weight:700;
+  color: var(--sidebar-text);border-radius:12px;cursor:pointer;transition:0.3s;
+}
+#sidebar ul li:hover,.active{background:var(--sidebar-hover);color:#000;}
+#hamburger{
+  position:fixed;top:20px;left:20px;width:35px;height:30px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;z-index:1100;
+}
+#hamburger .line{width:100%;height:5px;background:var(--accent);border-radius:3px;}
+
+/* Header */
+.header{text-align:center;margin:30px 0;}
+.title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,36px);color:var(--accent);text-shadow:0 0 25px var(--accent);}
+.subtitle{color:#cce0ff;margin-top:6px}
+
+/* FAQ */
+.faq-container{max-width:800px;margin:0 auto;padding:20px;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:15px;overflow:hidden;}
+.faq-item h3{cursor:pointer;padding:15px;font-family:'Orbitron',sans-serif;font-size:16px;background:var(--bg);margin:0;transition:0.3s;}
+.faq-item h3:hover{background:var(--accent);color:#000;}
+.faq-item p{padding:0 15px 15px 15px;display:none;font-family:'Inter',sans-serif;font-size:14px;color:#ccc;line-height:1.5;}
+.faq-item.active p{display:block;}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+  <ul>
+    <li data-link="index.html" onclick="window.location.href='index.html'">📦 Order Page</li>
+    <li data-link="faq.html" onclick="window.location.href='faq.html'">❓ FAQ</li>
+    <li data-link="ai.html" onclick="window.location.href='ai.html'">🤖 AI Chatbot</li>
+    <li data-link="about.html" onclick="window.location.href='about.html'">ℹ️ About Us</li>
+  </ul>
+</div>
+<div id="hamburger"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+
+<canvas id="space"></canvas>
+
+<div class="main-content">
+<div class="header">
+  <div class="title">❓ Frequently Asked Questions</div>
+  <div class="subtitle">Everything you need to know about our services</div>
+</div>
+
+<div class="faq-container">
+  <div class="faq-item">
+    <h3>💡 What types of services do you offer?</h3>
+    <p>We provide social media growth services including Instagram, TikTok, and YouTube followers, likes, comments, and subscribers.</p>
+  </div>
+  <div class="faq-item">
+    <h3>⏱️ How long will it take to receive my order?</h3>
+    <p>Delivery times vary by service and quality level. Standard services take 1-17 hours, High quality 1-7 hours, and Ultra premium 1-2 hours.</p>
+  </div>
+  <div class="faq-item">
+    <h3>🔄 Do you offer refills if followers/likes drop?</h3>
+    <p>Yes! High quality services include a 7-day refill, and Ultra premium services include lifetime refills.</p>
+  </div>
+  <div class="faq-item">
+    <h3>💳 What payment methods are accepted?</h3>
+    <p>Currently, we accept payments via WhatsApp order requests, which can be completed using mobile payment apps, bank transfers, or other methods we provide directly.</p>
+  </div>
+  <div class="faq-item">
+    <h3>⚠️ Is it safe to provide my profile or video links?</h3>
+    <p>Absolutely. We never share your personal data. Links are only used to deliver the requested services to your social media account.</p>
+  </div>
+</div>
+</div>
+
+<script>
+// 3D Star Background
+const c=document.getElementById("space"),ctx=c.getContext("2d");
+let w,h,s=[],starColor="#3aa0ff";
+function resize(){w=c.width=innerWidth;h=c.height=innerHeight;}
+addEventListener("resize",resize);resize();
+for(let i=0;i<350;i++)s.push({x:Math.random()*w,y:Math.random()*h,z:Math.random()*w});
+function anim(){ctx.fillStyle=getComputedStyle(document.body).backgroundColor;ctx.fillRect(0,0,w,h);
+s.forEach(e=>{e.z-=0.6;if(e.z<=0)e.z=w;let sx=(e.x-w/2)*(w/e.z)+w/2;let sy=(e.y-h/2)*(w/e.z)+h/2;ctx.fillStyle=starColor;ctx.fillRect(sx,sy,2,2);});
+requestAnimationFrame(anim);}
+anim();
+
+// Hamburger toggle
+const hamburger = document.getElementById("hamburger");
+hamburger.addEventListener("click", ()=>document.body.classList.toggle("sidebar-open"));
+
+// FAQ toggle
+document.querySelectorAll(".faq-item h3").forEach(h=>{
+  h.addEventListener("click", ()=> h.parentElement.classList.toggle("active"));
+});
+
+// Auto-highlight sidebar based on current page
+const currentPage = location.pathname.split("/").pop();
+document.querySelectorAll("#sidebar ul li").forEach(li => {
+  if(li.dataset.link === currentPage){
+    li.classList.add("active");
+  } else {
+    li.classList.remove("active");
+  }
+});
+</script>
+</body>
+</html>
