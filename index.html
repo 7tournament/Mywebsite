@@ -42,6 +42,14 @@ body.sidebar-open #sidebar{transform: translateX(0);}
   justify-content:space-between;cursor:pointer;z-index:1100;
 }
 #hamburger .line{width:100%;height:5px;background:var(--accent);border-radius:3px;}
+  <select onchange="setTheme(this.value)">
+  <option value="">Choose theme</option>
+  <option value="default">Default</option>
+  <option value="neon">Neon</option>
+  <option value="purple">Purple</option>
+  <option value="ocean">Ocean</option>
+  <option value="emerald">Emerald</option>
+</select>
 
 /* Support Bar */
 .support-bar{
@@ -285,57 +293,6 @@ const body = document.body;
 const hamburger = document.getElementById("hamburger");
 hamburger.addEventListener("click", () => body.classList.toggle("sidebar-open"));
 
-// Theme changer
-themeSelect.addEventListener("change", () => {
-    const theme = themeSelect.value;
-    switch(theme){
-        case "space":
-            document.documentElement.style.setProperty("--bg","#0b0f1a");
-            document.documentElement.style.setProperty("--accent","#3aa0ff");
-            document.documentElement.style.setProperty("--card","rgba(15,20,40,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#0b0f1a,#1a1f2a)");
-            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
-            document.documentElement.style.setProperty("--sidebar-hover","#3aa0ff");
-            starColor = "#3aa0ff";
-            break;
-        case "cybergreen":
-            document.documentElement.style.setProperty("--bg","#001f0f");
-            document.documentElement.style.setProperty("--accent","#00ff99");
-            document.documentElement.style.setProperty("--card","rgba(0,20,10,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f0f,#003320)");
-            document.documentElement.style.setProperty("--sidebar-text","#00ff99");
-            document.documentElement.style.setProperty("--sidebar-hover","#00ff99");
-            starColor = "#00ff99";
-            break;
-        case "purple":
-            document.documentElement.style.setProperty("--bg","#1a001f");
-            document.documentElement.style.setProperty("--accent","#bb00ff");
-            document.documentElement.style.setProperty("--card","rgba(20,0,40,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#1a001f,#400040)");
-            document.documentElement.style.setProperty("--sidebar-text","#bb00ff");
-            document.documentElement.style.setProperty("--sidebar-hover","#bb00ff");
-            starColor = "#bb00ff";
-            break;
-        case "ocean":
-            document.documentElement.style.setProperty("--bg","#001f2f");
-            document.documentElement.style.setProperty("--accent","#00ccff");
-            document.documentElement.style.setProperty("--card","rgba(0,15,40,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f2f,#003b5f)");
-            document.documentElement.style.setProperty("--sidebar-text","#00ccff");
-            document.documentElement.style.setProperty("--sidebar-hover","#00ccff");
-            starColor = "#00ccff";
-            break;
-        case "emerald":
-            document.documentElement.style.setProperty("--bg","#001f1a");
-            document.documentElement.style.setProperty("--accent","#00ff88");
-            document.documentElement.style.setProperty("--card","rgba(0,30,20,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f1a,#003322)");
-            document.documentElement.style.setProperty("--sidebar-text","#00ff88");
-            document.documentElement.style.setProperty("--sidebar-hover","#00ff88");
-            starColor = "#00ff88";
-            break;
-    }
-});
 // Update descriptions and min/max when service changes
 function updateService(){
     const serv = serviceSelect.value;
@@ -439,7 +396,7 @@ document.querySelectorAll("#sidebar ul li").forEach(li => {
         }
     });
 });
+<script src="/assets/js/theme.js"></script>  
 </script>
-
 </body>
 </html>
