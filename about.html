@@ -8,18 +8,20 @@
 <style>
 :root{
   --bg:#0b0f1a;
-  --card:rgba(15,20,40,0.95);
+  --card:rgba(30,35,60,0.95);
   --accent:#3aa0ff;
   --border:#445;
   --sidebar-bg: linear-gradient(135deg,#0b0f1a,#1a1f2a);
-  --sidebar-text:#ffffff;
   --sidebar-hover: var(--accent);
   --text:#ffffff;
 }
 
 /* General Reset */
 *{box-sizing:border-box;margin:0;padding:0;transition:all .3s ease;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:20px;overflow-x:hidden;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:20px;overflow-x:hidden;position:relative;}
+
+/* Canvas behind content */
+canvas#space{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 
 /* Sidebar */
 #sidebar{
@@ -42,12 +44,15 @@ body.sidebar-open #sidebar{transform: translateX(0);}
   margin-bottom:15px;
   font-family:'Orbitron',sans-serif;
   font-weight:700;
-  color: var(--sidebar-text);
+  color: #ffffff;
   border-radius:12px;
   cursor:pointer;
   transition:0.3s;
 }
-#sidebar ul li:hover,.active{background:var(--sidebar-hover);color:#000;}
+#sidebar ul li:hover,.active{
+  background: var(--sidebar-hover);
+  color: #ffffff; /* text stays white */
+}
 
 /* Hamburger */
 #hamburger{
@@ -64,12 +69,25 @@ body.sidebar-open #sidebar{transform: translateX(0);}
 }
 #hamburger .line{width:100%;height:5px;background:var(--accent);border-radius:3px;}
 
+/* Theme Selector */
+.controls{display:flex;flex-wrap:wrap;gap:18px;margin:30px auto;max-width:250px;}
+.controls div{flex:1 1 200px}
+label{font-family:'Orbitron',sans-serif;font-weight:700}
+select{width:100%;margin-top:6px;padding:12px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:#fff;font-family:'Orbitron',sans-serif;font-size:14px;}
+
 /* Main Content */
 .main-content{
-  max-width:1200px;
-  margin:0 auto;
+  max-width:1000px;
+  margin-left:270px; /* reserve space for sidebar */
   padding:20px;
 }
+@media screen and (max-width:768px){
+  .main-content{
+    margin-left:0;
+    padding-top:80px; /* space for hamburger */
+  }
+}
+
 .header{text-align:center;margin:40px 0;}
 .header .title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,36px);color:var(--accent);text-shadow:0 0 25px var(--accent);}
 .header .subtitle{font-family:'Roboto',sans-serif;color:#cce0ff;margin-top:6px;font-size:18px;}
@@ -85,13 +103,8 @@ body.sidebar-open #sidebar{transform: translateX(0);}
 .section h3{font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:15px;font-size:22px;}
 .section p{font-family:'Roboto',sans-serif;font-size:16px;line-height:1.8;color:#cce0ff;}
 
-.back-btn{
-  display:inline-block;padding:12px 25px;margin-bottom:25px;background:var(--accent);color:#000;font-family:'Orbitron',sans-serif;font-weight:700;border-radius:16px;text-decoration:none;
-}
-
-/* Footer */
 footer{margin-top:40px;padding:25px;text-align:center;background:var(--card);border-radius:20px;border:1px solid var(--border);}
-footer a{color:var(--accent);text-decoration:none}
+footer a{color:var(--accent);text-decoration:none;}
 </style>
 </head>
 <body>
@@ -107,10 +120,26 @@ footer a{color:var(--accent);text-decoration:none}
 </div>
 <div id="hamburger"><div class="line"></div><div class="line"></div><div class="line"></div></div>
 
+<!-- Main Content -->
+<div class="main-content">
 
   <div class="header">
     <div class="title">👑 About Us – GRIFFITH BOOSTS</div>
     <div class="subtitle">We help you grow your social presence with premium, reliable services.</div>
+  </div>
+
+  <!-- Theme Selector between header and sections -->
+  <div class="controls">
+    <div>
+      <label>🎨 Theme</label>
+      <select id="theme">
+        <option value="space">🌌 Space 3D</option>
+        <option value="cybergreen">💚 Cyber Green</option>
+        <option value="purple">💜 Purple Glow</option>
+        <option value="ocean">🌊 Ocean Blue</option>
+        <option value="emerald">💎 Emerald Green</option>
+      </select>
+    </div>
   </div>
 
   <div class="section">
@@ -120,7 +149,7 @@ footer a{color:var(--accent);text-decoration:none}
 
   <div class="section">
     <h3>What We Do</h3>
-    <p>Our services include followers, likes, views, comments, and shares, tailored to suit your audience engagement goals. We provide quick delivery, minimal drop, and customer-focused support, ensuring your social media accounts grow naturally and effectively. Whether you're an aspiring influencer or a brand looking to expand your reach, DEYDN BOOSTS has the right solution for you.</p>
+    <p>Our services include followers, likes, views, comments, and shares, tailored to suit your audience engagement goals. We provide quick delivery, minimal drop, and customer-focused support, ensuring your social media accounts grow naturally and effectively. Whether you're an aspiring influencer or a brand looking to expand your reach, GRIFFITH BOOSTS has the right solution for you.</p>
   </div>
 
   <div class="section">
@@ -142,6 +171,64 @@ footer a{color:var(--accent);text-decoration:none}
 <script>
 // Sidebar toggle
 document.getElementById("hamburger").addEventListener("click",()=>document.body.classList.toggle("sidebar-open"));
+
+// 3D star background
+const c=document.createElement('canvas');
+c.id="space";
+document.body.appendChild(c);
+const ctx=c.getContext("2d");
+let w,h,s=[],starColor="#3aa0ff";
+function resize(){w=c.width=innerWidth;h=c.height=innerHeight;}
+addEventListener("resize",resize);resize();
+for(let i=0;i<350;i++)s.push({x:Math.random()*w,y:Math.random()*h,z:Math.random()*w});
+function anim(){ctx.fillStyle=getComputedStyle(document.body).backgroundColor;ctx.fillRect(0,0,w,h);
+s.forEach(e=>{e.z-=0.6;if(e.z<=0)e.z=w;let sx=(e.x-w/2)*(w/e.z)+w/2;let sy=(e.y-h/2)*(w/e.z)+h/2;ctx.fillStyle=starColor;ctx.fillRect(sx,sy,2,2);});
+requestAnimationFrame(anim);}
+anim();
+
+// Theme selector
+const themeSelect = document.getElementById("theme");
+themeSelect.addEventListener("change", () => {
+    const theme = themeSelect.value;
+    switch(theme){
+        case "space":
+            document.documentElement.style.setProperty("--bg","#0b0f1a");
+            document.documentElement.style.setProperty("--accent","#3aa0ff");
+            document.documentElement.style.setProperty("--card","rgba(30,35,60,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#0b0f1a,#1a1f2a)");
+            document.documentElement.style.setProperty("--sidebar-hover","#3aa0ff");
+            starColor="#3aa0ff"; break;
+        case "cybergreen":
+            document.documentElement.style.setProperty("--bg","#001f0f");
+            document.documentElement.style.setProperty("--accent","#00ff99");
+            document.documentElement.style.setProperty("--card","rgba(0,30,15,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f0f,#003320)");
+            document.documentElement.style.setProperty("--sidebar-hover","#00ff99");
+            starColor="#00ff99"; break;
+        case "purple":
+            document.documentElement.style.setProperty("--bg","#1a001f");
+            document.documentElement.style.setProperty("--accent","#bb00ff");
+            document.documentElement.style.setProperty("--card","rgba(30,0,60,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#1a001f,#400040)");
+            document.documentElement.style.setProperty("--sidebar-hover","#bb00ff");
+            starColor="#bb00ff"; break;
+        case "ocean":
+            document.documentElement.style.setProperty("--bg","#001f2f");
+            document.documentElement.style.setProperty("--accent","#00ccff");
+            document.documentElement.style.setProperty("--card","rgba(0,30,60,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f2f,#003b5f)");
+            document.documentElement.style.setProperty("--sidebar-hover","#00ccff");
+            starColor="#00ccff"; break;
+        case "emerald":
+            document.documentElement.style.setProperty("--bg","#001f1a");
+            document.documentElement.style.setProperty("--accent","#00ff88");
+            document.documentElement.style.setProperty("--card","rgba(0,35,20,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f1a,#003322)");
+            document.documentElement.style.setProperty("--sidebar-hover","#00ff88");
+            starColor="#00ff88"; break;
+    }
+});
 </script>
+
 </body>
 </html>
