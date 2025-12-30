@@ -9,11 +9,10 @@
 :root{
   --bg:#0b0f1a;
   --accent:#3aa0ff;
-  --card:rgba(15,20,40,0.95);
+  --card:rgba(30,35,60,0.95);
   --border:#445;
   --text:#ffffff;
   --sidebar-bg: linear-gradient(135deg,#0b0f1a,#1a1f2a);
-  --sidebar-text: #ffffff;
   --sidebar-hover: var(--accent);
 }
 *{box-sizing:border-box;margin:0;padding:0;transition:all .6s ease}
@@ -23,18 +22,24 @@ canvas{position:fixed;inset:0;z-index:-1}
 /* Sidebar */
 #sidebar{
   position:fixed;left:0;top:0;width:250px;height:100%;background: var(--sidebar-bg);
-  box-shadow:5px 0 25px rgba(0,0,0,0.8);border-right:2px solid var(--accent);border-radius:0 20px 20px 0;
-  transform: translateX(-250px);transition: transform 0.5s ease;z-index:1000;
+  box-shadow:5px 0 25px rgba(0,0,0,0.8);border-right:2px solid var(--accent);
+  border-radius:0 20px 20px 0;transform: translateX(-250px);transition: transform 0.5s ease;z-index:1000;
 }
 body.sidebar-open #sidebar{transform: translateX(0);}
 #sidebar ul{list-style:none;padding:60px 20px 0 20px;}
 #sidebar ul li{
   padding:18px 12px;margin-bottom:15px;font-family:'Orbitron',sans-serif;font-weight:700;
-  color: var(--sidebar-text);border-radius:12px;cursor:pointer;transition:0.3s;
+  color: #ffffff; /* always white */
+  border-radius:12px;cursor:pointer;transition:0.3s;
 }
-#sidebar ul li:hover,.active{background:var(--sidebar-hover);color:#000;}
+#sidebar ul li:hover,
+#sidebar ul li.active{
+  background: var(--sidebar-hover);
+  color: #ffffff; /* always white */
+}
 #hamburger{
-  position:fixed;top:20px;left:20px;width:35px;height:30px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;z-index:1100;
+  position:fixed;top:20px;left:20px;width:35px;height:30px;display:flex;flex-direction:column;
+  justify-content:space-between;cursor:pointer;z-index:1100;
 }
 #hamburger .line{width:100%;height:5px;background:var(--accent);border-radius:3px;}
 
@@ -43,12 +48,18 @@ body.sidebar-open #sidebar{transform: translateX(0);}
 .title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,36px);color:var(--accent);text-shadow:0 0 25px var(--accent);}
 .subtitle{color:#cce0ff;margin-top:6px}
 
+/* Theme Selector */
+.controls{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:25px;}
+.controls div{flex:1 1 200px}
+label{font-family:'Orbitron',sans-serif;font-weight:700}
+select{width:100%;margin-top:6px;padding:12px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:#fff;font-family:'Orbitron',sans-serif;font-size:14px;min-width:200px;}
+
 /* FAQ */
 .faq-container{max-width:800px;margin:0 auto;padding:20px;}
-.faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:15px;overflow:hidden;}
-.faq-item h3{cursor:pointer;padding:15px;font-family:'Orbitron',sans-serif;font-size:16px;background:var(--bg);margin:0;transition:0.3s;}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:15px;overflow:hidden;color:#fff;}
+.faq-item h3{cursor:pointer;padding:15px;font-family:'Orbitron',sans-serif;font-size:16px;background:var(--bg);margin:0;transition:0.3s;color:#fff;}
 .faq-item h3:hover{background:var(--accent);color:#000;}
-.faq-item p{padding:0 15px 15px 15px;display:none;font-family:'Inter',sans-serif;font-size:14px;color:#ccc;line-height:1.5;}
+.faq-item p{padding:0 15px 15px 15px;display:none;font-family:'Inter',sans-serif;font-size:14px;color:#fff;line-height:1.5;}
 .faq-item.active p{display:block;}
 </style>
 </head>
@@ -58,7 +69,7 @@ body.sidebar-open #sidebar{transform: translateX(0);}
 <div id="sidebar">
   <ul>
     <li data-link="index.html" onclick="window.location.href='index.html'">📦 Order Page</li>
-    <li data-link="faq.html" onclick="window.location.href='faq.html'">❓ FAQ</li>
+    <li data-link="faq.html" class="active" onclick="window.location.href='faq.html'">❓ FAQ</li>
     <li data-link="ai.html" onclick="window.location.href='ai.html'">🤖 AI Chatbot</li>
     <li data-link="about.html" onclick="window.location.href='about.html'">ℹ️ About Us</li>
   </ul>
@@ -71,6 +82,20 @@ body.sidebar-open #sidebar{transform: translateX(0);}
 <div class="header">
   <div class="title">❓ Frequently Asked Questions</div>
   <div class="subtitle">Everything you need to know about our services</div>
+</div>
+
+<!-- Theme Selector -->
+<div class="controls">
+  <div>
+    <label>🎨 Theme</label>
+    <select id="theme">
+      <option value="space">🌌 Space 3D</option>
+      <option value="cybergreen">💚 Cyber Green</option>
+      <option value="purple">💜 Purple Glow</option>
+      <option value="ocean">🌊 Ocean Blue</option>
+      <option value="emerald">💎 Emerald Green</option>
+    </select>
+  </div>
 </div>
 
 <div class="faq-container">
@@ -110,22 +135,54 @@ requestAnimationFrame(anim);}
 anim();
 
 // Hamburger toggle
-const hamburger = document.getElementById("hamburger");
-hamburger.addEventListener("click", ()=>document.body.classList.toggle("sidebar-open"));
+document.getElementById("hamburger").addEventListener("click", ()=>document.body.classList.toggle("sidebar-open"));
 
 // FAQ toggle
 document.querySelectorAll(".faq-item h3").forEach(h=>{
   h.addEventListener("click", ()=> h.parentElement.classList.toggle("active"));
 });
 
-// Auto-highlight sidebar based on current page
-const currentPage = location.pathname.split("/").pop();
-document.querySelectorAll("#sidebar ul li").forEach(li => {
-  if(li.dataset.link === currentPage){
-    li.classList.add("active");
-  } else {
-    li.classList.remove("active");
-  }
+// Theme selector
+const themeSelect = document.getElementById("theme");
+themeSelect.addEventListener("change", () => {
+    const theme = themeSelect.value;
+    switch(theme){
+        case "space":
+            document.documentElement.style.setProperty("--bg","#0b0f1a");
+            document.documentElement.style.setProperty("--accent","#3aa0ff");
+            document.documentElement.style.setProperty("--card","rgba(30,35,60,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#0b0f1a,#1a1f2a)");
+            document.documentElement.style.setProperty("--sidebar-hover","#3aa0ff");
+            starColor="#3aa0ff"; break;
+        case "cybergreen":
+            document.documentElement.style.setProperty("--bg","#001f0f");
+            document.documentElement.style.setProperty("--accent","#00ff99");
+            document.documentElement.style.setProperty("--card","rgba(0,30,15,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f0f,#003320)");
+            document.documentElement.style.setProperty("--sidebar-hover","#00ff99");
+            starColor="#00ff99"; break;
+        case "purple":
+            document.documentElement.style.setProperty("--bg","#1a001f");
+            document.documentElement.style.setProperty("--accent","#bb00ff");
+            document.documentElement.style.setProperty("--card","rgba(30,0,60,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#1a001f,#400040)");
+            document.documentElement.style.setProperty("--sidebar-hover","#bb00ff");
+            starColor="#bb00ff"; break;
+        case "ocean":
+            document.documentElement.style.setProperty("--bg","#001f2f");
+            document.documentElement.style.setProperty("--accent","#00ccff");
+            document.documentElement.style.setProperty("--card","rgba(0,30,60,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f2f,#003b5f)");
+            document.documentElement.style.setProperty("--sidebar-hover","#00ccff");
+            starColor="#00ccff"; break;
+        case "emerald":
+            document.documentElement.style.setProperty("--bg","#001f1a");
+            document.documentElement.style.setProperty("--accent","#00ff88");
+            document.documentElement.style.setProperty("--card","rgba(0,35,20,0.95)");
+            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f1a,#003322)");
+            document.documentElement.style.setProperty("--sidebar-hover","#00ff88");
+            starColor="#00ff88"; break;
+    }
 });
 </script>
 </body>
