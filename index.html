@@ -405,7 +405,20 @@ waBtn.addEventListener("click", () => {
   const discount = discountBox.value || "No code";
   const curr = currencySelectElem.value;
   const total = totalBox.textContent.split(":")[1].trim();
-  const orderNum = Math.floor(Math.random()*900)+100; // random 100-999
+// Get last order number from localStorage
+let lastOrder = localStorage.getItem("orderNumber");
+
+// If not exists, start from 1
+if (!lastOrder) {
+  lastOrder = 1;
+} else {
+  lastOrder = parseInt(lastOrder) + 1;
+}
+
+// Save updated order number
+localStorage.setItem("orderNumber", lastOrder);
+
+const orderNum = lastOrder;
 
   const message = 
 `Griffith boosts new order:
