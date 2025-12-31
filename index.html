@@ -113,10 +113,10 @@ footer a{color:var(--accent);text-decoration:none}
 <!-- Sidebar -->
 <div id="sidebar">
   <ul>
-    <li class="active" onclick="location.href='index.html'">📦 Order Page</li>
-    <li onclick="location.href='faq.html'">❓ FAQ</li>
-    <li onclick="location.href='ai.html'">🤖 AI Chatbot</li>
-    <li onclick="location.href='about.html'">ℹ️ About Us</li>
+    <li class="active" onclick="location.href='index'">📦 Order Page</li>
+    <li onclick="location.href='faq'">❓ FAQ</li>
+    <li onclick="location.href='ai'">🤖 AI Chatbot</li>
+    <li onclick="location.href='about'">ℹ️ About Us</li>
   </ul>
 </div>
 <div id="hamburger">
@@ -438,10 +438,10 @@ document.querySelectorAll("#sidebar ul li").forEach(li => {
   li.addEventListener("click", () => {
     const section = li.textContent.trim();
     switch(section){
-      case "📦 Order Page": window.location.href = "index.html"; break;
-      case "❓ FAQ": window.location.href = "faq.html"; break;
-      case "🤖 AI Chatbot": window.location.href = "ai.html"; break;
-      case "ℹ️ About Us": window.location.href = "about.html"; break;
+      case "📦 Order Page": window.location.href = "index"; break;
+      case "❓ FAQ": window.location.href = "faq"; break;
+      case "🤖 AI Chatbot": window.location.href = "ai"; break;
+      case "ℹ️ About Us": window.location.href = "about"; break;
     }
   });
 });
