@@ -298,6 +298,7 @@ const warnBox = document.getElementById("warn");
 const per1kBox = document.getElementById("per1k");
 const totalBox = document.getElementById("total");
 const linkBox = document.getElementById("link");
+const discountBox = document.getElementById("discount");
 const waBtn = document.getElementById("whatsappOrder");
 const themeSelect = document.getElementById("theme");
 const body = document.body;
@@ -306,127 +307,107 @@ const body = document.body;
 const hamburger = document.getElementById("hamburger");
 hamburger.addEventListener("click", () => body.classList.toggle("sidebar-open"));
 
-// Theme changer
+// Theme configurations
+const themes = {
+  space: { bg:"#0b0f1a", accent:"#3aa0ff", card:"rgba(15,20,40,0.95)", sidebarBg:"linear-gradient(135deg,#0b0f1a,#1a1f2a)", sidebarText:"#fff", sidebarHover:"#3aa0ff", wa:"#3aa0ff", star:"#3aa0ff" },
+  cybergreen: { bg:"#001f0f", accent:"#00ff99", card:"rgba(0,20,10,0.95)", sidebarBg:"linear-gradient(135deg,#001f0f,#003320)", sidebarText:"#00ff99", sidebarHover:"#00ff99", wa:"#00ff99", star:"#00ff99" },
+  purple: { bg:"#1a001f", accent:"#bb00ff", card:"rgba(20,0,40,0.95)", sidebarBg:"linear-gradient(135deg,#1a001f,#400040)", sidebarText:"#bb00ff", sidebarHover:"#bb00ff", wa:"#bb00ff", star:"#bb00ff" },
+  ocean: { bg:"#001f2f", accent:"#00ccff", card:"rgba(0,15,40,0.95)", sidebarBg:"linear-gradient(135deg,#001f2f,#003b5f)", sidebarText:"#00ccff", sidebarHover:"#00ccff", wa:"#00ccff", star:"#00ccff" },
+  emerald: { bg:"#001f1a", accent:"#00ff88", card:"rgba(0,30,20,0.95)", sidebarBg:"linear-gradient(135deg,#001f1a,#003322)", sidebarText:"#00ff88", sidebarHover:"#00ff88", wa:"#00ff88", star:"#00ff88" }
+};
+
+// Apply theme
+function applyTheme(name){
+  const t = themes[name];
+  Object.entries({
+    "--bg": t.bg,
+    "--accent": t.accent,
+    "--card": t.card,
+    "--sidebar-bg": t.sidebarBg,
+    "--sidebar-text": t.sidebarText,
+    "--sidebar-hover": t.sidebarHover,
+    "--wa-bg": t.wa
+  }).forEach(([key,val]) => document.documentElement.style.setProperty(key,val));
+  starColor = t.star;
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem("theme");
+if(savedTheme){
+  themeSelect.value = savedTheme;
+  applyTheme(savedTheme);
+}
+
+// Listen to theme changes
 themeSelect.addEventListener("change", () => {
-    const theme = themeSelect.value;
-
-    switch(theme){
-
-        case "space":
-            document.documentElement.style.setProperty("--bg","#0b0f1a");
-            document.documentElement.style.setProperty("--accent","#3aa0ff");
-            document.documentElement.style.setProperty("--card","rgba(15,20,40,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#0b0f1a,#1a1f2a)");
-            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
-            document.documentElement.style.setProperty("--sidebar-hover","#3aa0ff");
-            document.documentElement.style.setProperty("--wa-bg","#3aa0ff");
-            starColor = "#3aa0ff";
-            break;
-
-        case "cybergreen":
-            document.documentElement.style.setProperty("--bg","#001f0f");
-            document.documentElement.style.setProperty("--accent","#00ff99");
-            document.documentElement.style.setProperty("--card","rgba(0,20,10,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f0f,#003320)");
-            document.documentElement.style.setProperty("--sidebar-text","#00ff99");
-            document.documentElement.style.setProperty("--sidebar-hover","#00ff99");
-            document.documentElement.style.setProperty("--wa-bg","#00ff99");
-            starColor = "#00ff99";
-            break;
-
-        case "purple":
-            document.documentElement.style.setProperty("--bg","#1a001f");
-            document.documentElement.style.setProperty("--accent","#bb00ff");
-            document.documentElement.style.setProperty("--card","rgba(20,0,40,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#1a001f,#400040)");
-            document.documentElement.style.setProperty("--sidebar-text","#bb00ff");
-            document.documentElement.style.setProperty("--sidebar-hover","#bb00ff");
-            document.documentElement.style.setProperty("--wa-bg","#bb00ff");
-            starColor = "#bb00ff";
-            break;
-
-        case "ocean":
-            document.documentElement.style.setProperty("--bg","#001f2f");
-            document.documentElement.style.setProperty("--accent","#00ccff");
-            document.documentElement.style.setProperty("--card","rgba(0,15,40,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f2f,#003b5f)");
-            document.documentElement.style.setProperty("--sidebar-text","#00ccff");
-            document.documentElement.style.setProperty("--sidebar-hover","#00ccff");
-            document.documentElement.style.setProperty("--wa-bg","#00ccff");
-            starColor = "#00ccff";
-            break;
-
-        case "emerald":
-            document.documentElement.style.setProperty("--bg","#001f1a");
-            document.documentElement.style.setProperty("--accent","#00ff88");
-            document.documentElement.style.setProperty("--card","rgba(0,30,20,0.95)");
-            document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f1a,#003322)");
-            document.documentElement.style.setProperty("--sidebar-text","#00ff88");
-            document.documentElement.style.setProperty("--sidebar-hover","#00ff88");
-            document.documentElement.style.setProperty("--wa-bg","#00ff88");
-            starColor = "#00ff88";
-            break;
-    }
+  const theme = themeSelect.value;
+  applyTheme(theme);
+  localStorage.setItem("theme", theme);
 });
+
 // Update descriptions and min/max when service changes
 function updateService(){
-    const serv = serviceSelect.value;
-    descBox.value = services[serv].desc;
-    minmaxBox.textContent = `Min: ${services[serv].min} | Max: ${services[serv].max}`;
-    updatePrice();
+  const serv = serviceSelect.value;
+  descBox.value = services[serv].desc;
+  minmaxBox.textContent = `Min: ${services[serv].min} | Max: ${services[serv].max}`;
+  updatePrice();
 }
 serviceSelect.addEventListener("change", updateService);
 
 // Update quality description
 function updateQuality(){
-    const q = qualitySelect.value;
-    switch(q){
-        case "standard": qualityDesc.value = "⭐ best quality | 1-17 hours delivery | no refill | possible drop"; break;
-        case "high": qualityDesc.value = "🔥 good quality | 1-8 hours delivery | 7 day refill | lowest drop"; break;
-        case "ultra": qualityDesc.value = "💎 best quality | 1-2 hours delivery | lifetime refill | no drop"; break;
-    }
-    updatePrice();
+  const q = qualitySelect.value;
+  switch(q){
+    case "standard": qualityDesc.value = "⭐ best quality | 1-17 hours delivery | no refill | possible drop"; break;
+    case "high": qualityDesc.value = "🔥 good quality | 1-8 hours delivery | 7 day refill | lowest drop"; break;
+    case "ultra": qualityDesc.value = "💎 best quality | 1-2 hours delivery | lifetime refill | no drop"; break;
+  }
+  updatePrice();
 }
 qualitySelect.addEventListener("change", updateQuality);
 
 // Price calculation
 function updatePrice(){
-    const serv = serviceSelect.value;
-    const q = qualitySelect.value;
-    const curr = currencySelectElem.value;
-    let qty = parseInt(quantity.value) || 0;
-    const min = services[serv].min;
-    const max = services[serv].max;
+  const serv = serviceSelect.value;
+  const q = qualitySelect.value;
+  const curr = currencySelectElem.value;
+  let qty = parseInt(quantity.value) || services[serv].min; // default to min if empty
+  const min = services[serv].min;
+  const max = services[serv].max;
 
-    if(qty < min){
-        warnBox.textContent = `Minimum quantity is ${min}`;
-    } else if(qty > max){
-        warnBox.textContent = `Maximum quantity is ${max}`;
-    } else{
-        warnBox.textContent = "";
-    }
+  if(qty < min){
+    warnBox.textContent = `Minimum quantity is ${min}`;
+    qty = min;
+  } else if(qty > max){
+    warnBox.textContent = `Maximum quantity is ${max}`;
+    qty = max;
+  } else{
+    warnBox.textContent = "";
+  }
 
-    let pricePer1k = services[serv].price[q];
-    let totalPrice = (qty/1000) * pricePer1k * rates[curr];
-    let pricePer1kConverted = pricePer1k * rates[curr];
+  let pricePer1k = services[serv].price[q];
+  let totalPrice = (qty/1000) * pricePer1k * rates[curr];
+  let pricePer1kConverted = pricePer1k * rates[curr];
 
-per1kBox.textContent = `Price per 1k: ${curr} ${pricePer1kConverted.toFixed(2)}`;
-    totalBox.textContent = `Total Price: ${curr} ${totalPrice.toFixed(2)}`;
+  per1kBox.textContent = `Price per 1k: ${curr} ${pricePer1kConverted.toFixed(2)}`;
+  totalBox.textContent = `Total Price: ${curr} ${totalPrice.toFixed(2)}`;
+  quantity.value = qty; // update field if out of bounds
 }
 quantity.addEventListener("input", updatePrice);
 currencySelectElem.addEventListener("change", updatePrice);
 
 // WhatsApp order message
 waBtn.addEventListener("click", () => {
-    const servName = serviceSelect.options[serviceSelect.selectedIndex].text;
-    const qty = quantity.value || services[serviceSelect.value].min;
-    const qual = qualitySelect.options[qualitySelect.selectedIndex].text;
-    const link = linkBox.value || "No link provided";
-    const curr = currencySelectElem.value;
-    const total = totalBox.textContent.split(":")[1].trim();
-    const orderNum = Math.floor(Math.random()*900)+100; // random 100-999
+  const servName = serviceSelect.options[serviceSelect.selectedIndex].text;
+  const qty = quantity.value || services[serviceSelect.value].min;
+  const qual = qualitySelect.options[qualitySelect.selectedIndex].text;
+  const link = linkBox.value || "No link provided";
+  const discount = discountBox.value || "No code";
+  const curr = currencySelectElem.value;
+  const total = totalBox.textContent.split(":")[1].trim();
+  const orderNum = Math.floor(Math.random()*900)+100; // random 100-999
 
-    const message = 
+  const message = 
 `Griffith boosts new order:
 Order #${orderNum}
 
@@ -434,6 +415,7 @@ Service: ${servName}
 Quantity: ${qty}
 Quality: ${qual}
 Link: ${link}
+Discount Code: ${discount}
 Price: ${total}
 
 Please wait 1-2 hours to get your order processed
@@ -442,10 +424,10 @@ Warning: do not change/edit this message
 
 Thanks for ordering! (:`;
 
-    const waLink = `https://wa.me/923159180748?text=${encodeURIComponent(message)}`;
-    waBtn.setAttribute("href", waLink);
+  const waLink = `https://wa.me/923159180748?text=${encodeURIComponent(message)}`;
+  waBtn.setAttribute("href", waLink);
 });
-    
+
 // Initialize defaults
 updateService();
 updateQuality();
@@ -453,26 +435,16 @@ updatePrice();
 
 // Sidebar section clicks redirect to respective pages
 document.querySelectorAll("#sidebar ul li").forEach(li => {
-    li.addEventListener("click", () => {
-        const section = li.textContent.trim();
-        switch(section){
-            case "📦 Order Page":
-                window.location.href = "index.html"; 
-                break;
-            case "❓ FAQ":
-                window.location.href = "faq.html"; 
-                break;
-            case "🤖 AI Chatbot":
-                window.location.href = "ai.html"; 
-                break;
-            case "ℹ️ About Us":
-                window.location.href = "about.html"; 
-                break;
-        }
-    });
+  li.addEventListener("click", () => {
+    const section = li.textContent.trim();
+    switch(section){
+      case "📦 Order Page": window.location.href = "index.html"; break;
+      case "❓ FAQ": window.location.href = "faq.html"; break;
+      case "🤖 AI Chatbot": window.location.href = "ai.html"; break;
+      case "ℹ️ About Us": window.location.href = "about.html"; break;
+    }
+  });
 });
 </script>
-  <script src="theme.js"></script>
-
 </body>
 </html>
