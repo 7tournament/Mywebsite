@@ -3,43 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Griffith Boosts - FAQ</title>
+<title>About Us – GRIFFITH BOOSTS</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0f1a;
   --accent:#3aa0ff;
-  --card:rgba(30,35,60,0.95);
+  --card:rgba(15,20,40,0.95);
   --border:#445;
   --text:#ffffff;
   --sidebar-bg: linear-gradient(135deg,#0b0f1a,#1a1f2a);
+  --sidebar-text:#ffffff;
   --sidebar-hover: var(--accent);
 }
-*{box-sizing:border-box;margin:0;padding:0;transition:all .6s ease}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:20px;overflow-x:hidden;font-size:16px;}
-canvas{position:fixed;inset:0;z-index:-1}
+
+/* Reset */
+*{box-sizing:border-box;margin:0;padding:0;transition:all .3s ease}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:20px;overflow-x:hidden;font-size:16px}
 
 /* Sidebar */
 #sidebar{
   position:fixed;left:0;top:0;width:250px;height:100%;background: var(--sidebar-bg);
-  box-shadow:5px 0 25px rgba(0,0,0,0.8);border-right:2px solid var(--accent);
-  border-radius:0 20px 20px 0;transform: translateX(-250px);transition: transform 0.5s ease;z-index:1000;
+  border-right:2px solid var(--accent);border-radius:0 20px 20px 0;transform: translateX(-250px);transition: transform 0.5s ease;z-index:1000;
 }
 body.sidebar-open #sidebar{transform: translateX(0);}
 #sidebar ul{list-style:none;padding:60px 20px 0 20px;}
 #sidebar ul li{
   padding:18px 12px;margin-bottom:15px;font-family:'Orbitron',sans-serif;font-weight:700;
-  color: #ffffff; /* always white */
-  border-radius:12px;cursor:pointer;transition:0.3s;
+  color: var(--sidebar-text);border-radius:12px;cursor:pointer;transition:0.3s;
 }
-#sidebar ul li:hover,
-#sidebar ul li.active{
-  background: var(--sidebar-hover);
-  color: #ffffff; /* always white */
-}
+#sidebar ul li:hover,.active{background:var(--sidebar-hover);color:#ffffff;}
+
+/* Hamburger */
 #hamburger{
-  position:fixed;top:20px;left:20px;width:35px;height:30px;display:flex;flex-direction:column;
-  justify-content:space-between;cursor:pointer;z-index:1100;
+  position:fixed;top:20px;left:20px;width:35px;height:30px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;z-index:1100;
 }
 #hamburger .line{width:100%;height:5px;background:var(--accent);border-radius:3px;}
 
@@ -48,19 +45,25 @@ body.sidebar-open #sidebar{transform: translateX(0);}
 .title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,36px);color:var(--accent);text-shadow:0 0 25px var(--accent);}
 .subtitle{color:#cce0ff;margin-top:6px}
 
-/* Theme Selector */
-.controls{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:25px;}
-.controls div{flex:1 1 200px}
-label{font-family:'Orbitron',sans-serif;font-weight:700}
-select{width:100%;margin-top:6px;padding:12px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:#fff;font-family:'Orbitron',sans-serif;font-size:14px;min-width:200px;}
+/* Sections */
+.section-container{max-width:800px;margin:0 auto;padding:20px;}
+.section{
+  background: var(--card);border:1px solid var(--border);border-radius:20px;padding:30px;margin-bottom:30px;
+  box-shadow:0 10px 25px rgba(0,0,0,.6);
+}
+.section h3{font-family:'Orbitron',sans-serif;color:var(--accent);margin-bottom:15px;font-size:22px;}
+.section p{font-family:'Inter',sans-serif;font-size:16px;line-height:1.8;color:#cce0ff;}
 
-/* FAQ */
-.faq-container{max-width:800px;margin:0 auto;padding:20px;}
-.faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:15px;overflow:hidden;color:#fff;}
-.faq-item h3{cursor:pointer;padding:15px;font-family:'Orbitron',sans-serif;font-size:16px;background:var(--bg);margin:0;transition:0.3s;color:#fff;}
-.faq-item h3:hover{background:var(--accent);color:#000;}
-.faq-item p{padding:0 15px 15px 15px;display:none;font-family:'Inter',sans-serif;font-size:14px;color:#fff;line-height:1.5;}
-.faq-item.active p{display:block;}
+/* Theme Selector */
+.theme-container{
+  max-width:800px;margin:0 auto 20px auto;text-align:center;
+}
+.theme-container label{font-family:'Orbitron',sans-serif;font-weight:700;margin-right:10px;}
+.theme-container select{padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:#fff;font-family:'Orbitron',sans-serif;font-weight:700;}
+
+/* Footer */
+footer{margin-top:40px;padding:25px;text-align:center;background:var(--card);border-radius:20px;border:1px solid var(--border);}
+footer a{color:var(--accent);text-decoration:none}
 </style>
 </head>
 <body>
@@ -68,26 +71,23 @@ select{width:100%;margin-top:6px;padding:12px;border-radius:14px;border:1px soli
 <!-- Sidebar -->
 <div id="sidebar">
   <ul>
-    <li data-link="index.html" onclick="window.location.href='index.html'">📦 Order Page</li>
-    <li data-link="faq.html" class="active" onclick="window.location.href='faq.html'">❓ FAQ</li>
-    <li data-link="ai.html" onclick="window.location.href='ai.html'">🤖 AI Chatbot</li>
-    <li data-link="about.html" onclick="window.location.href='about.html'">ℹ️ About Us</li>
+    <li onclick="window.location.href='index.html'">📦 Order Page</li>
+    <li onclick="window.location.href='faq.html'">❓ FAQ</li>
+    <li onclick="window.location.href='ai.html'">🤖 AI Chatbot</li>
+    <li class="active" onclick="window.location.href='about.html'">ℹ️ About Us</li>
   </ul>
 </div>
 <div id="hamburger"><div class="line"></div><div class="line"></div><div class="line"></div></div>
 
-<canvas id="space"></canvas>
-
 <div class="main-content">
-<div class="header">
-  <div class="title">❓ Frequently Asked Questions</div>
-  <div class="subtitle">Everything you need to know about our services</div>
-</div>
+  <div class="header">
+    <div class="title">👑 About Us – GRIFFITH BOOSTS</div>
+    <div class="subtitle">We help you grow your social presence with premium, reliable services.</div>
+  </div>
 
-<!-- Theme Selector -->
-<div class="controls">
-  <div>
-    <label>🎨 Theme</label>
+  <!-- Theme Selector -->
+  <div class="theme-container">
+    <label for="theme">🎨 Theme:</label>
     <select id="theme">
       <option value="space">🌌 Space 3D</option>
       <option value="cybergreen">💚 Cyber Green</option>
@@ -96,95 +96,97 @@ select{width:100%;margin-top:6px;padding:12px;border-radius:14px;border:1px soli
       <option value="emerald">💎 Emerald Green</option>
     </select>
   </div>
+
+  <div class="section-container">
+    <div class="section">
+      <h3>Who We Are</h3>
+      <p>GRIFFITH BOOSTS is a dedicated team of social media enthusiasts committed to helping individuals, influencers, and brands amplify their online presence. We specialize in providing real, safe, and high-quality social media growth services across platforms like TikTok, Instagram, Facebook, YouTube, Twitter, Spotify, and Telegram.</p>
+    </div>
+
+    <div class="section">
+      <h3>What We Do</h3>
+      <p>Our services include followers, likes, views, comments, and shares, tailored to suit your audience engagement goals. We provide quick delivery, minimal drop, and customer-focused support, ensuring your social media accounts grow naturally and effectively. Whether you're an aspiring influencer or a brand looking to expand your reach, GRIFFITH BOOSTS has the right solution for you.</p>
+    </div>
+
+    <div class="section">
+      <h3>Our Mission</h3>
+      <p>To empower creators and brands with the tools they need to succeed in the digital world. We strive to maintain transparency, reliability, and quality in every service we offer, ensuring our clients’ growth is not only fast but sustainable.</p>
+    </div>
+
+    <div class="section">
+      <h3>Contact & Support</h3>
+      <p>For any inquiries or assistance, reach out via WhatsApp: <a href="https://wa.me/923159180748" target="_blank">+92 315 9180748</a>. Our team is available 24/7 to help you get the most out of our services.</p>
+    </div>
+  </div>
 </div>
 
-<div class="faq-container">
-  <div class="faq-item">
-    <h3>💡 What types of services do you offer?</h3>
-    <p>We provide social media growth services including Instagram, TikTok, and YouTube followers, likes, comments, and subscribers.</p>
-  </div>
-  <div class="faq-item">
-    <h3>⏱️ How long will it take to receive my order?</h3>
-    <p>Delivery times vary by service and quality level. Standard services take 1-17 hours, High quality 1-7 hours, and Ultra premium 1-2 hours.</p>
-  </div>
-  <div class="faq-item">
-    <h3>🔄 Do you offer refills if followers/likes drop?</h3>
-    <p>Yes! High quality services include a 7-day refill, and Ultra premium services include lifetime refills.</p>
-  </div>
-  <div class="faq-item">
-    <h3>💳 What payment methods are accepted?</h3>
-    <p>Currently, we accept payments via WhatsApp order requests, which can be completed using mobile payment apps, bank transfers, or other methods we provide directly.</p>
-  </div>
-  <div class="faq-item">
-    <h3>⚠️ Is it safe to provide my profile or video links?</h3>
-    <p>Absolutely. We never share your personal data. Links are only used to deliver the requested services to your social media account.</p>
-  </div>
-</div>
-</div>
+<footer>
+<p>© All Rights Reserved – GRIFFITH BOOSTS</p>
+</footer>
 
 <script>
-// 3D Star Background
-const c=document.getElementById("space"),ctx=c.getContext("2d");
-let w,h,s=[],starColor="#3aa0ff";
-function resize(){w=c.width=innerWidth;h=c.height=innerHeight;}
-addEventListener("resize",resize);resize();
-for(let i=0;i<350;i++)s.push({x:Math.random()*w,y:Math.random()*h,z:Math.random()*w});
-function anim(){ctx.fillStyle=getComputedStyle(document.body).backgroundColor;ctx.fillRect(0,0,w,h);
-s.forEach(e=>{e.z-=0.6;if(e.z<=0)e.z=w;let sx=(e.x-w/2)*(w/e.z)+w/2;let sy=(e.y-h/2)*(w/e.z)+h/2;ctx.fillStyle=starColor;ctx.fillRect(sx,sy,2,2);});
-requestAnimationFrame(anim);}
-anim();
+// Sidebar toggle
+document.getElementById("hamburger").addEventListener("click",()=>document.body.classList.toggle("sidebar-open"));
 
-// Hamburger toggle
-document.getElementById("hamburger").addEventListener("click", ()=>document.body.classList.toggle("sidebar-open"));
-
-// FAQ toggle
-document.querySelectorAll(".faq-item h3").forEach(h=>{
-  h.addEventListener("click", ()=> h.parentElement.classList.toggle("active"));
-});
-
-// Theme selector
+// Theme system with localStorage
 const themeSelect = document.getElementById("theme");
-themeSelect.addEventListener("change", () => {
-    const theme = themeSelect.value;
+function applyTheme(theme){
     switch(theme){
         case "space":
             document.documentElement.style.setProperty("--bg","#0b0f1a");
             document.documentElement.style.setProperty("--accent","#3aa0ff");
-            document.documentElement.style.setProperty("--card","rgba(30,35,60,0.95)");
+            document.documentElement.style.setProperty("--card","rgba(15,20,40,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#0b0f1a,#1a1f2a)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#3aa0ff");
-            starColor="#3aa0ff"; break;
+            break;
         case "cybergreen":
             document.documentElement.style.setProperty("--bg","#001f0f");
             document.documentElement.style.setProperty("--accent","#00ff99");
-            document.documentElement.style.setProperty("--card","rgba(0,30,15,0.95)");
+            document.documentElement.style.setProperty("--card","rgba(0,20,10,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f0f,#003320)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#00ff99");
-            starColor="#00ff99"; break;
+            break;
         case "purple":
             document.documentElement.style.setProperty("--bg","#1a001f");
             document.documentElement.style.setProperty("--accent","#bb00ff");
-            document.documentElement.style.setProperty("--card","rgba(30,0,60,0.95)");
+            document.documentElement.style.setProperty("--card","rgba(20,0,40,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#1a001f,#400040)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#bb00ff");
-            starColor="#bb00ff"; break;
+            break;
         case "ocean":
             document.documentElement.style.setProperty("--bg","#001f2f");
             document.documentElement.style.setProperty("--accent","#00ccff");
-            document.documentElement.style.setProperty("--card","rgba(0,30,60,0.95)");
+            document.documentElement.style.setProperty("--card","rgba(0,15,40,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f2f,#003b5f)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#00ccff");
-            starColor="#00ccff"; break;
+            break;
         case "emerald":
             document.documentElement.style.setProperty("--bg","#001f1a");
             document.documentElement.style.setProperty("--accent","#00ff88");
-            document.documentElement.style.setProperty("--card","rgba(0,35,20,0.95)");
+            document.documentElement.style.setProperty("--card","rgba(0,30,20,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f1a,#003322)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#00ff88");
-            starColor="#00ff88"; break;
+            break;
     }
+}
+
+themeSelect.addEventListener("change",()=>{
+    const theme = themeSelect.value;
+    applyTheme(theme);
+    localStorage.setItem("theme",theme);
 });
+
+// Restore theme on load
+if(localStorage.getItem("theme")){
+    const savedTheme = localStorage.getItem("theme");
+    applyTheme(savedTheme);
+    themeSelect.value = savedTheme;
+}
 </script>
-  <script src="theme.js"></script>
 </body>
 </html>
