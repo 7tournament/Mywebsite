@@ -4,159 +4,76 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GRIFFITH AI Full Service Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Roboto:wght@400;500;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0f1a;
-  --card:rgba(15,20,40,0.95);
   --accent:#3aa0ff;
+  --card:rgba(15,20,40,0.95);
   --border:#445;
+  --text:#ffffff;
   --sidebar-bg: linear-gradient(135deg,#0b0f1a,#1a1f2a);
   --sidebar-text:#ffffff;
   --sidebar-hover: var(--accent);
-  --text:#ffffff;
 }
 
-/* General Reset */
-*{box-sizing:border-box;margin:0;padding:0;transition:all .3s ease;}
-body{font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text);padding:20px;overflow-x:hidden;position:relative;}
-
-/* Canvas behind content */
-canvas#space{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+/* Reset */
+*{box-sizing:border-box;margin:0;padding:0;transition:all .3s ease}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:20px;overflow-x:hidden;font-size:16px}
 
 /* Sidebar */
 #sidebar{
-  position:fixed;
-  left:0;
-  top:0;
-  width:250px;
-  height:100%;
-  background: var(--sidebar-bg);
-  border-right:2px solid var(--accent);
-  border-radius:0 20px 20px 0;
-  transform: translateX(-250px);
-  transition: transform 0.5s ease;
-  z-index:1000;
+  position:fixed;left:0;top:0;width:250px;height:100%;background: var(--sidebar-bg);
+  border-right:2px solid var(--accent);border-radius:0 20px 20px 0;transform: translateX(-250px);transition: transform 0.5s ease;z-index:1000;
 }
 body.sidebar-open #sidebar{transform: translateX(0);}
 #sidebar ul{list-style:none;padding:60px 20px 0 20px;}
 #sidebar ul li{
-  padding:18px 12px;
-  margin-bottom:15px;
-  font-family:'Orbitron',sans-serif;
-  font-weight:700;
-  color: #ffffff;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.3s;
+  padding:18px 12px;margin-bottom:15px;font-family:'Orbitron',sans-serif;font-weight:700;
+  color: var(--sidebar-text);border-radius:12px;cursor:pointer;transition:0.3s;
 }
-#sidebar ul li:hover,.active{background: var(--sidebar-hover); color:#ffffff;}
+#sidebar ul li:hover,.active{background:var(--sidebar-hover);color:#ffffff;}
 
 /* Hamburger */
 #hamburger{
-  position:fixed;
-  top:20px;
-  left:20px;
-  width:35px;
-  height:30px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  cursor:pointer;
-  z-index:1100;
+  position:fixed;top:20px;left:20px;width:35px;height:30px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;z-index:1100;
 }
 #hamburger .line{width:100%;height:5px;background:var(--accent);border-radius:3px;}
 
+/* Header */
+.header{text-align:center;margin:30px 0;}
+.title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,36px);color:var(--accent);text-shadow:0 0 25px var(--accent);}
+.subtitle{color:#cce0ff;margin-top:6px}
+
 /* Theme Selector */
-.controls{display:flex;flex-wrap:wrap;gap:18px;margin:30px auto;max-width:250px;}
-.controls div{flex:1 1 200px}
-label{font-family:'Orbitron',sans-serif;font-weight:700}
-select{width:100%;margin-top:6px;padding:12px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:#fff;font-family:'Orbitron',sans-serif;font-size:14px;}
-
-/* Main Content */
-.main-content{
-  max-width:700px;
-  margin-left:270px;
-  padding:20px;
+.theme-container{
+  max-width:800px;margin:0 auto 20px auto;text-align:center;
 }
-@media screen and (max-width:768px){
-  .main-content{margin-left:0;padding-top:80px;}
-}
-.header{text-align:center;margin:40px 20px;}
-.header .title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,36px);color:var(--accent);text-shadow:0 0 25px var(--accent);}
-.header .subtitle{font-family:'Roboto',sans-serif;color:#cce0ff;margin-top:6px;font-size:16px;}
+.theme-container label{font-family:'Orbitron',sans-serif;font-weight:700;margin-right:10px;}
+.theme-container select{padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:#fff;font-family:'Orbitron',sans-serif;font-weight:700;}
 
+/* Chat Box */
 .chat-box{
-  background:var(--card);
-  border:2px solid var(--accent);
-  border-radius:20px;
-  height:500px;
-  overflow-y:auto;
-  padding:15px;
-  margin-top:30px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  max-width:800px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:15px;min-height:400px;
+  display:flex;flex-direction:column;gap:10px;overflow-y:auto;
 }
 .message{
-  max-width:75%;
-  padding:10px 15px;
-  border-radius:15px;
-  font-size:14px;
-  word-wrap:break-word;
-  white-space:pre-line;
+  max-width:75%;padding:10px 15px;border-radius:15px;font-size:14px;word-wrap:break-word;white-space:pre-line;
 }
-.user-msg{background:#3aa0ff;color:#000;align-self:flex-end;}
+.user-msg{background:var(--accent);color:#000;align-self:flex-end;}
 .ai-msg{background:#5555aa;color:#fff;align-self:flex-start;}
 .typing{font-style:italic;opacity:0.7;}
-
 .input-container{
-  display:flex;
-  margin-top:15px;
-  gap:10px;
+  max-width:800px;margin:20px auto;display:flex;gap:10px;
 }
-input[type="text"]{
-  flex:1;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:#fff;
-}
-button{
-  padding:12px 20px;
-  border:none;
-  border-radius:14px;
-  background:var(--accent);
-  color:#000;
-  font-weight:700;
-  cursor:pointer;
-  font-family:'Orbitron',sans-serif;
-  transition:all 0.2s;
-}
+input[type="text"]{flex:1;padding:12px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:#fff;}
+button{padding:12px 20px;border:none;border-radius:14px;background:var(--accent);color:#000;font-weight:700;cursor:pointer;font-family:'Orbitron',sans-serif;transition:all 0.2s;}
 button:hover{transform:scale(1.05);}
-.back-btn{
-  display:inline-block; 
-  padding:12px 25px; 
-  border-radius:16px; 
-  background:var(--accent); 
-  color:#000; 
-  font-family:'Orbitron',sans-serif; 
-  font-weight:700; 
-  text-decoration:none; 
-  margin-bottom:20px;
-}
-.whatsapp-msg{
-  margin-top:5px;
-  font-size:13px;
-  background:#25D366;
-  color:#000;
-  border-radius:10px;
-  padding:8px;
-  cursor:pointer;
-  text-decoration:none;
-  display:inline-block;
-}
+.whatsapp-msg{margin-top:5px;font-size:13px;background:#25D366;color:#000;border-radius:10px;padding:8px;text-decoration:none;display:inline-block;cursor:pointer;text-align:center;}
+
+/* Footer */
+footer{margin-top:40px;padding:25px;text-align:center;background:var(--card);border-radius:20px;border:1px solid var(--border);}
+footer a{color:var(--accent);text-decoration:none}
 </style>
 </head>
 <body>
@@ -173,24 +90,21 @@ button:hover{transform:scale(1.05);}
 <div id="hamburger"><div class="line"></div><div class="line"></div><div class="line"></div></div>
 
 <div class="main-content">
-
   <div class="header">
     <div class="title">🤖 Griffith AI Full Service Guide</div>
     <div class="subtitle">Ask me about any platform and I’ll instruct all available services!</div>
   </div>
 
   <!-- Theme Selector -->
-  <div class="controls">
-    <div>
-      <label>🎨 Theme</label>
-      <select id="theme">
-        <option value="space">🌌 Space 3D</option>
-        <option value="cybergreen">💚 Cyber Green</option>
-        <option value="purple">💜 Purple Glow</option>
-        <option value="ocean">🌊 Ocean Blue</option>
-        <option value="emerald">💎 Emerald Green</option>
-      </select>
-    </div>
+  <div class="theme-container">
+    <label for="theme">🎨 Theme:</label>
+    <select id="theme">
+      <option value="space">🌌 Space 3D</option>
+      <option value="cybergreen">💚 Cyber Green</option>
+      <option value="purple">💜 Purple Glow</option>
+      <option value="ocean">🌊 Ocean Blue</option>
+      <option value="emerald">💎 Emerald Green</option>
+    </select>
   </div>
 
   <div class="chat-box" id="chat-box"></div>
@@ -199,68 +113,72 @@ button:hover{transform:scale(1.05);}
     <input type="text" id="user-input" placeholder="Type your question...">
     <button id="send-btn">Send</button>
   </div>
-
 </div>
+
+<footer>
+<p>© All Rights Reserved – GRIFFITH BOOSTS</p>
+</footer>
 
 <script>
 // Sidebar toggle
 document.getElementById("hamburger").addEventListener("click",()=>document.body.classList.toggle("sidebar-open"));
 
-// 3D Star Background
-const c=document.createElement("canvas");
-c.id="space"; document.body.appendChild(c);
-const ctx=c.getContext("2d");
-let w,h,s=[],starColor="#3aa0ff";
-function resize(){w=c.width=innerWidth;h=c.height=innerHeight;}
-window.addEventListener("resize",resize);resize();
-for(let i=0;i<600;i++)s.push({x:Math.random()*w,y:Math.random()*h,z:Math.random()*w});
-function anim(){ctx.fillStyle=getComputedStyle(document.body).backgroundColor;ctx.fillRect(0,0,w,h);
-s.forEach(e=>{e.z-=0.6;if(e.z<=0)e.z=w;let sx=(e.x-w/2)*(w/e.z)+w/2;let sy=(e.y-h/2)*(w/e.z)+h/2;ctx.fillStyle=starColor;ctx.fillRect(sx,sy,2,2);});
-requestAnimationFrame(anim);}
-anim();
-
-// Theme selector
+// Theme system with localStorage
 const themeSelect = document.getElementById("theme");
-themeSelect.addEventListener("change", () => {
-    const theme = themeSelect.value;
+function applyTheme(theme){
     switch(theme){
         case "space":
             document.documentElement.style.setProperty("--bg","#0b0f1a");
             document.documentElement.style.setProperty("--accent","#3aa0ff");
             document.documentElement.style.setProperty("--card","rgba(15,20,40,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#0b0f1a,#1a1f2a)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#3aa0ff");
-            starColor="#3aa0ff"; break;
+            break;
         case "cybergreen":
             document.documentElement.style.setProperty("--bg","#001f0f");
             document.documentElement.style.setProperty("--accent","#00ff99");
-            document.documentElement.style.setProperty("--card","rgba(0,30,15,0.95)");
+            document.documentElement.style.setProperty("--card","rgba(0,20,10,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f0f,#003320)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#00ff99");
-            starColor="#00ff99"; break;
+            break;
         case "purple":
             document.documentElement.style.setProperty("--bg","#1a001f");
             document.documentElement.style.setProperty("--accent","#bb00ff");
-            document.documentElement.style.setProperty("--card","rgba(30,0,60,0.95)");
+            document.documentElement.style.setProperty("--card","rgba(20,0,40,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#1a001f,#400040)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#bb00ff");
-            starColor="#bb00ff"; break;
+            break;
         case "ocean":
             document.documentElement.style.setProperty("--bg","#001f2f");
             document.documentElement.style.setProperty("--accent","#00ccff");
-            document.documentElement.style.setProperty("--card","rgba(0,30,60,0.95)");
+            document.documentElement.style.setProperty("--card","rgba(0,15,40,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f2f,#003b5f)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#00ccff");
-            starColor="#00ccff"; break;
+            break;
         case "emerald":
             document.documentElement.style.setProperty("--bg","#001f1a");
             document.documentElement.style.setProperty("--accent","#00ff88");
-            document.documentElement.style.setProperty("--card","rgba(0,35,20,0.95)");
+            document.documentElement.style.setProperty("--card","rgba(0,30,20,0.95)");
             document.documentElement.style.setProperty("--sidebar-bg","linear-gradient(135deg,#001f1a,#003322)");
+            document.documentElement.style.setProperty("--sidebar-text","#ffffff");
             document.documentElement.style.setProperty("--sidebar-hover","#00ff88");
-            starColor="#00ff88"; break;
+            break;
     }
+}
+themeSelect.addEventListener("change",()=>{
+    const theme = themeSelect.value;
+    applyTheme(theme);
+    localStorage.setItem("theme",theme);
 });
+if(localStorage.getItem("theme")){
+    const savedTheme = localStorage.getItem("theme");
+    applyTheme(savedTheme);
+    themeSelect.value = savedTheme;
+}
 
 // AI Chat
 const services={
@@ -305,14 +223,14 @@ function getAIResponse(msg){
   if(platform){
     let response=`✅ Instructions for ${platform.charAt(0).toUpperCase()+platform.slice(1)} services:\n\n`;
     services[platform].forEach(s=>{
-      response+=`🔹 ${s}:\n1️⃣ Go to Order Page.\n2️⃣ Select "${platform.charAt(0).toUpperCase()+platform.slice(1)} Boosts".\n3️⃣ Choose "${s}" service.\n4️⃣ Enter quantity and quality.\n5️⃣ Paste the link.\n6️⃣ Click 'Order via WhatsApp' to place your order.\n`;
+      response+=`🔹 ${s}:\n1️⃣ Go to Order Page.\n2️⃣ Select "${platform.charAt(0).toUpperCase()+platform.slice(1)} Boosts".\n3️⃣ Choose "${s}" service.\n4️⃣ Enter quantity and quality.\n5️⃣ Paste the link.\n6️⃣ Click 'Order via WhatsApp'.\n`;
       response+=generateWhatsApp(platform,s,"5000","example.com")+"\n\n";
     });
     return response;
   }
-  if(/hi|hello|hey/.test(msg)) return "Hello! 👋 I’m your GRIFFITH AI assistant. Ask me about any platform and I’ll guide you!";
-  if(/help|support/.test(msg)) return "Mention the platform you want to boost, and I’ll instruct all available services for it!";
-  return "I can guide you for all services on TikTok, Instagram, YouTube, Facebook, Twitter, Spotify, or Telegram. Type the platform name to get full instructions.";
+  if(/hi|hello|hey/.test(msg)) return "Hello! 👋 I’m your GRIFFITH AI assistant. Ask me about any platform!";
+  if(/help|support/.test(msg)) return "Mention the platform you want to boost, and I’ll instruct all services available!";
+  return "I can guide you for TikTok, Instagram, YouTube, Facebook, Twitter, Spotify, or Telegram. Type the platform name to get full instructions.";
 }
 
 function typeAIMessage(msg){
@@ -334,6 +252,5 @@ function sendMessage(){
 sendBtn.addEventListener("click",sendMessage);
 input.addEventListener("keypress",e=>{if(e.key==="Enter") sendMessage();});
 </script>
-<script src="theme.js"></script>
 </body>
 </html>
