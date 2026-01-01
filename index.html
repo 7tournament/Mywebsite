@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -452,7 +453,8 @@ themeSelect.addEventListener("change", () => {
 });
 
 // Update descriptions and min/max when service changes
-function updateService(){
+// Update descriptions and min/max when service changes
+function updateService() {
   const serv = serviceSelect.value;
   descBox.value = services[serv].desc;
   minmaxBox.textContent = `Min: ${services[serv].min} | Max: ${services[serv].max}`;
@@ -461,9 +463,9 @@ function updateService(){
 serviceSelect.addEventListener("change", updateService);
 
 // Update quality description
-function updateQuality(){
+function updateQuality() {
   const q = qualitySelect.value;
-  switch(q){
+  switch(q) {
     case "standard": qualityDesc.value = "⭐ best quality | 1-17 hours delivery | no refill | possible drop"; break;
     case "high": qualityDesc.value = "🔥 good quality | 1-8 hours delivery | 7 day refill | lowest drop"; break;
     case "ultra": qualityDesc.value = "💎 best quality | 1-2 hours delivery | lifetime refill | no drop"; break;
@@ -473,31 +475,34 @@ function updateQuality(){
 qualitySelect.addEventListener("change", updateQuality);
 
 // Price calculation
-function updatePrice(){
+function updatePrice() {
   const serv = serviceSelect.value;
   const q = qualitySelect.value;
   const curr = currencySelectElem.value;
-  let qty = parseInt(quantity.value) || services[serv].min; // default to min if empty
   const min = services[serv].min;
   const max = services[serv].max;
 
-  if(qty < min){
-    warnBox.textContent = `Minimum quantity is ${min}`;
-    qty = min;
-  } else if(qty > max){
-    warnBox.textContent = `Maximum quantity is ${max}`;
-    qty = max;
-  } else{
+  let qty = parseInt(quantity.value);
+
+  // Show warning if quantity is invalid, but don't override the input
+  if (isNaN(qty)) {
+    warnBox.textContent = "";
+    totalBox.textContent = `Total Price: ${curr} 0.00`;
+  } else if (qty < min) {
+    warnBox.textContent = `⚠️ Minimum quantity is ${min}`;
+  } else if (qty > max) {
+    warnBox.textContent = `⚠️ Maximum quantity is ${max}`;
+  } else {
     warnBox.textContent = "";
   }
 
+  // Calculate price only if quantity is a valid number
   let pricePer1k = services[serv].price[q];
-  let totalPrice = (qty/1000) * pricePer1k * rates[curr];
+  let totalPrice = (!isNaN(qty) ? (qty / 1000) * pricePer1k * rates[curr] : 0);
   let pricePer1kConverted = pricePer1k * rates[curr];
 
   per1kBox.textContent = `Price per 1k: ${curr} ${pricePer1kConverted.toFixed(2)}`;
   totalBox.textContent = `Total Price: ${curr} ${totalPrice.toFixed(2)}`;
-  quantity.value = qty; // update field if out of bounds
 }
 quantity.addEventListener("input", updatePrice);
 currencySelectElem.addEventListener("change", updatePrice);
@@ -505,27 +510,19 @@ currencySelectElem.addEventListener("change", updatePrice);
 // WhatsApp order message
 waBtn.addEventListener("click", () => {
   const servName = serviceSelect.options[serviceSelect.selectedIndex].text;
-  const qty = quantity.value || services[serviceSelect.value].min;
+  const qty = quantity.value || "Not specified";
   const qual = qualitySelect.options[qualitySelect.selectedIndex].text;
   const link = linkBox.value || "No link provided";
   const discount = discountBox.value || "No code";
   const curr = currencySelectElem.value;
   const total = totalBox.textContent.split(":")[1].trim();
-// Get last order number from localStorage
-let lastOrder = localStorage.getItem("orderNumber");
 
-// If not exists, start from 92
-if (!lastOrder) {
-  lastOrder = 92;
-} else {
-  lastOrder = parseInt(lastOrder) + 1;
-}
+  let lastOrder = localStorage.getItem("orderNumber");
+  if (!lastOrder) lastOrder = 92; 
+  else lastOrder = parseInt(lastOrder) + 1;
+  localStorage.setItem("orderNumber", lastOrder);
 
-// Save updated order number
-localStorage.setItem("orderNumber", lastOrder);
-
-const orderNum = lastOrder;
-
+  const orderNum = lastOrder;
   const message = 
 `Griffith boosts new order:
 Order #${orderNum}
@@ -552,7 +549,7 @@ updateService();
 updateQuality();
 updatePrice();
 
-// Sidebar section clicks redirect to respective pages
+// Sidebar clicks redirect to pages
 document.querySelectorAll("#sidebar ul li").forEach(li => {
   li.addEventListener("click", () => {
     const section = li.textContent.trim();
