@@ -6,6 +6,106 @@
 <title>Griffith Boosts</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* Header container animation */
+.header-flex{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+  animation: fadeInUp 1.2s ease;
+}
+
+/* Griffith logo */
+.header-logo{
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--accent);
+  box-shadow:
+    0 0 20px var(--accent),
+    0 0 40px rgba(58,160,255,.6);
+  animation: glowPulse 3s infinite alternate;
+  transition: transform .4s ease, box-shadow .4s ease;
+}
+
+/* Hover 3D tilt effect */
+.header-logo:hover{
+  transform: perspective(600px) rotateY(10deg) rotateX(5deg) scale(1.08);
+  box-shadow:
+    0 0 30px var(--accent),
+    0 0 60px var(--accent);
+}
+
+/* Text */
+.header-text{
+  text-align:left;
+}
+
+/* Mobile fix */
+@media (max-width:600px){
+  .header-flex{
+    flex-direction:column;
+  }
+  .header-text{
+    text-align:center;
+  }
+}
+
+/* Animations */
+@keyframes glowPulse{
+  from{
+    box-shadow:
+      0 0 15px var(--accent),
+      0 0 30px rgba(58,160,255,.5);
+  }
+  to{
+    box-shadow:
+      0 0 30px var(--accent),
+      0 0 60px rgba(58,160,255,.9);
+  }
+}
+
+@keyframes fadeInUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+.header-flex{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.header-logo{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--accent);
+  box-shadow:0 0 25px var(--accent);
+}
+
+.header-text{
+  text-align:left;
+}
+
+@media (max-width:600px){
+  .header-flex{
+    flex-direction:column;
+  }
+  .header-text{
+    text-align:center;
+  }
+}
 :root{
   --bg:#0b0f1a;
   --accent:#3aa0ff;
@@ -106,6 +206,7 @@ footer a{color:var(--accent);text-decoration:none}
 
 /* Main content container */
 .main-content{max-width:1200px;margin:0 auto;padding:0 20px;}
+
 </style>
 </head>
 <body>
@@ -132,9 +233,14 @@ footer a{color:var(--accent);text-decoration:none}
 📞 Need Support? Click Here
 </a>
 
-<div class="header">
-  <div class="title">👑 GRIFFITH BOOSTS</div>
-  <div class="subtitle">Premium Social Media Growth Services</div>
+<div class="header header-flex">
+  <img class="header-logo"
+       src="https://raw.githubusercontent.com/7tournament/Mywebsite/main/griffith.JPEG"
+       alt="Griffith">
+  <div class="header-text">
+    <div class="title">👑 GRIFFITH BOOSTS</div>
+    <div class="subtitle">Premium Social Media Growth Services</div>
+  </div>
 </div>
 
 <div class="controls">
