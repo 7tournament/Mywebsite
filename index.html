@@ -452,7 +452,6 @@ themeSelect.addEventListener("change", () => {
 });
 
 // Update descriptions and min/max when service changes
-// Update descriptions and min/max when service changes
 function updateService() {
   const serv = serviceSelect.value;
   descBox.value = services[serv].desc;
@@ -500,7 +499,8 @@ function updatePrice() {
   let totalPrice = (!isNaN(qty) ? (qty / 1000) * pricePer1k * rates[curr] : 0);
   let pricePer1kConverted = pricePer1k * rates[curr];
 
-  per1kBox.textContent = `Price per 1k: ${curr} ${pricePer1kConverted.toFixed(2)}`;
+  per1kBox.textContent = `Price per 1000:      
+  ${curr} ${pricePer1kConverted.toFixed(2)}`;
   totalBox.textContent = `Total Price: ${curr} ${totalPrice.toFixed(2)}`;
 }
 quantity.addEventListener("input", updatePrice);
