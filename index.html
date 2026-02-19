@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="prs" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAKH NEGAR | Professional Tailoring & Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0F0F0F;
+            --gold: #D4AF37;
+            --dark-gold: #B8860B;
+            --light-gold: #E8C07D;
+            --bg: #111111;
+            --text: #E0E0E0;
+            --button-bg: #1a1a1a;
+            --shadow-light: #2a2a2a;
+            --shadow-dark: #0a0a0a;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        section {
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        section:target {
+            animation: sectionPop 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes sectionPop {
+            0% { transform: perspective(1000px) rotateX(15deg) translateZ(-100px) scale(0.9); opacity: 0.3; }
+            40% { transform: perspective(1000px) rotateX(-5deg) translateZ(50px) scale(1.05); opacity: 1; }
+            70% { transform: perspective(1000px) rotateX(2deg) translateZ(-10px) scale(0.98); }
+            100% { transform: perspective(1000px) rotateX(0) translateZ(0) scale(1); opacity: 1; }
+        }
+
+        header {
+            background: linear-gradient(rgba(15,15,15,0.94), rgba(15,15,15,0.99));
+            text-align: center;
+            padding: 110px 20px 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(212,175,55,0.12) 0%, transparent 60%);
+            animation: shine 12s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0%, 100% { transform: translate(0,0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translate(20%, 20%) rotate(180deg); opacity: 0.7; }
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 7.2rem;
+            font-weight: 900;
+            letter-spacing: 10px;
+            margin: 0;
+            background: linear-gradient(135deg, #FFD700 0%, #E8C07D 40%, #D4AF37 70%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 
+                0 0 15px rgba(212,175,55,0.8),
+                0 0 35px rgba(212,175,55,0.5),
+                3px 3px 0 #8B6914,
+                6px 6px 0 #5c4a0f;
+            animation: title-pulse 4s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 20px rgba(212,175,55,0.6));
+        }
+
+        @keyframes title-pulse {
+            from { transform: scale(1); text-shadow: 0 0 15px rgba(212,175,55,0.8); }
+            to   { transform: scale(1.02); text-shadow: 0 0 40px rgba(212,175,55,0.9); }
+        }
+
+        .subtitle {
+            font-size: 1.9rem;
+            color: var(--light-gold);
+            margin: 12px 0 6px;
+            letter-spacing: 4px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: #bbb;
+            max-width: 720px;
+            margin: 0 auto;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: var(--black);
+            padding: 12px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--gold);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            background: rgba(15,15,15,0.95);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: nowrap;
+        }
+
+        .nav-item {
+            position: relative;
+            color: var(--gold);
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-3px) perspective(500px) rotateX(0deg);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            box-shadow: 
+                6px 6px 12px var(--shadow-dark),
+                -6px -6px 12px var(--shadow-light);
+            background: var(--button-bg);
+            white-space: nowrap;
+        }
+
+        .nav-item::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.7), inset -4px -4px 8px rgba(255,255,255,0.04);
+            opacity: 0.65;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-6px) perspective(500px) rotateX(2deg);
+            color: var(--light-gold);
+            box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
+        }
+
+        .nav-item:active {
+            transform: translateY(1px) perspective(500px) rotateX(-2deg);
+            box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+        }
+
+        .admission, .order, .contact {
+            background-color: rgba(60, 47, 47, 0.35);
+            border: 1px solid var(--gold);
+            border-radius: 14px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(8px);
+            transition: box-shadow 0.5s ease, transform 0.5s ease;
+        }
+
+        section:target .admission,
+        section:target .order,
+        section:target .contact {
+            box-shadow: 0 0 40px rgba(212,175,55,0.4);
+            transform: scale(1.01);
+        }
+
+        .highlight {
+            color: var(--light-gold);
+            font-weight: bold;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-width: 600px;
+            margin: 30px auto 0;
+        }
+
+        input, select, textarea {
+            padding: 14px;
+            border: 1px solid var(--gold);
+            background: rgba(255,255,255,0.06);
+            color: white;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px var(--gold);
+            outline: none;
+        }
+
+        button {
+            position: relative;
+            background: var(--button-bg);
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+            transform: translateY(-3px);
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.6), inset -4px -4px 8px rgba(255,255,255,0.04);
+            opacity: 0.6;
+        }
+
+        button:hover {
+            transform: translateY(-6px);
+            box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+        }
+
+        footer {
+            background: var(--black);
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--gold);
+            color: var(--light-gold);
+        }
+
+        .contact p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .contact .extra-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--gold);
+        }
+
+        .contact .extra-info p {
+            color: var(--light-gold);
+            font-weight: 400;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 4.8rem; letter-spacing: 6px; }
+            .nav-links { gap: 20px; flex-wrap: wrap; }
+            .nav-item { font-size: 1rem; padding: 8px 18px; }
+            nav { padding: 10px 15px; }
+            
+            @keyframes sectionPop {
+                0% { transform: perspective(800px) rotateX(10deg) translateZ(-50px) scale(0.95); opacity: 0.3; }
+                100% { transform: perspective(800px) rotateX(0) translateZ(0) scale(1); opacity: 1; }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="main-title">NAKH NEGAR</h1>
+        <p class="subtitle">PROFESSIONAL TAILORING & DESIGN</p>
+        <p class="tagline">کارنگار نخطی خیاط‌گاه – جایی که هنر خیاطی با دقت حرفه‌ای و خلاقیت بی‌نهایت ترکیب می‌شود. ما لباس‌های سفارشی، طراحی‌های منحصربه‌فرد و آموزش‌های تخصصی را با بالاترین کیفیت ارائه می‌دهیم.</p>
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="#admission" class="nav-item">ثبت نام پذیرش</a>
+            <a href="#order" class="nav-item">سفارش محصول</a>
+            <a href="#contact" class="nav-item">تماس با ما</a>
+        </div>
+    </nav>
+
+    <section id="admission" class="admission">
+        <h2>ثبت نام پذیرش (دوره‌های خیاطی و طراحی)</h2>
+        <p>در حال حاضر <span class="highlight">پذیرش جدید باز است</span>. به دوره‌های حرفه‌ای خیاطی، طراحی لباس، دوخت سنتی و مدرن، و تکنیک‌های پیشرفته بپیوندید.</p>
+        <p>مدت دوره‌ها: ۳ تا ۱۲ ماه – با مدرک معتبر و آموزش عملی.</p>
+
+        <form id="admissionForm">
+            <input type="text" id="admissionName" placeholder="نام و نام خانوادگی" required>
+            <select id="admissionCourse" required>
+                <option value="" disabled selected>دوره مورد نظر را انتخاب کنید</option>
+                <option value="دوره پایه خیاطی">دوره پایه خیاطی</option>
+                <option value="دوره پیشرفته طراحی لباس">دوره پیشرفته طراحی لباس</option>
+                <option value="دوره دوخت لباس سنتی">دوره دوخت لباس سنتی</option>
+                <option value="دوره کامل حرفه‌ای (۶–۱۲ ماه)">دوره کامل حرفه‌ای (۶–۱۲ ماه)</option>
+            </select>
+            <textarea id="admissionMessage" rows="4" placeholder="پیام یا سؤال اضافی (اختیاری)"></textarea>
+            <button type="submit">ثبت نام درخواست</button>
+        </form>
+    </section>
+
+    <section id="order" class="order">
+        <h2>سفارش محصول (لباس سفارشی)</h2>
+        <p>هر نوع لباس دلخواه خود را سفارش دهید: کت و شلوار، لباس شب، لباس عروس، جامه سنتی، پیراهن و شلوار، و غیره.</p>
+        <p>فقط فرم زیر را پر کنید تا با شما تماس بگیریم و جزئیات (اندازه، پارچه، طراحی، زمان تحویل) را هماهنگ کنیم.</p>
+
+        <form id="orderForm">
+            <input type="text" id="orderName" placeholder="نام و نام خانوادگی" required>
+            <textarea id="orderDetails" rows="5" placeholder="توضیح سفارش: نوع لباس، رنگ، پارچه مورد نظر، اندازه‌ها، و هر جزئیات دیگر" required></textarea>
+            <button type="submit">ارسال سفارش به واتساپ</button>
+        </form>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>تماس با ما</h2>
+        <!-- New details added as requested: phone and address from the image -->
+        <div class="extra-info">
+            <p>۰۷۸۴۰۱۱۹۷۱ (تماس ثانوی) · 0784011971</p>
+            <p>تالقان، سرک ریس امیر محمد، پایین مسجد، پلاک انجینیر کبیر، منزل تحتانی، نمبر تماس ۱۰۱</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© ۱۴۰۵ NAKH NEGAR – Professional Tailoring & Design. تمامی حقوق محفوظ است.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll with enhanced 3D effect on click
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    targetSection.classList.remove('section-pop');
+                    void targetSection.offsetWidth;
+                    targetSection.classList.add('section-pop');
+                    
+                    window.location.hash = targetId;
+                    
+                    setTimeout(() => {
+                        targetSection.classList.remove('section-pop');
+                    }, 1000);
+                });
+            });
+
+            if (window.location.hash) {
+                const targetSection = document.querySelector(window.location.hash);
+                if (targetSection) {
+                    setTimeout(() => {
+                        targetSection.classList.add('section-pop');
+                        setTimeout(() => {
+                            targetSection.classList.remove('section-pop');
+                        }, 1000);
+                    }, 100);
+                }
+            }
+
+            // ========== WHATSAPP INTEGRATION FOR ORDER FORM ==========
+            const orderForm = document.getElementById('orderForm');
+            const whatsappNumber = '0784011971'; // The number from the contact section
+
+            orderForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Stop normal form submission
+
+                // Get form values
+                const name = document.getElementById('orderName').value.trim();
+                const details = document.getElementById('orderDetails').value.trim();
+
+                // Simple validation (already required by HTML, but just in case)
+                if (!name || !details) {
+                    alert('لطفاً نام و توضیحات سفارش را پر کنید.');
+                    return;
+                }
+
+                // Construct the message text (in Persian)
+                const message = `📐 *سفارش جدید از وبسایت NAKH NEGAR* 📐\n\n👤 *نام:* ${name}\n📝 *جزئیات سفارش:*\n${details}`;
+
+                // Encode for URL
+                const encodedMessage = encodeURIComponent(message);
+
+                // Create WhatsApp URL (using the number with country code; assuming +93 for Afghanistan, but we'll use as given)
+                // The number 0784011971 -> remove leading 0 for international? We'll keep as 0784011971, WhatsApp web works with it.
+                // Better to use international format: +93 78 4011971 → 93784011971 (without +)
+                // We'll use 93784011971 (assuming Afghanistan +93). If 0 is kept, it may not work. Let's use clean version:
+                // The user might expect the exact number as displayed. We'll use 93784011971 (remove leading 0 and add 93)
+                const cleanNumber = '93784011971'; // 0784011971 -> remove 0, add 93
+
+                const whatsappURL = `https://wa.me/${cleanNumber}?text=${encodedMessage}`;
+
+                // Redirect to WhatsApp
+                window.open(whatsappURL, '_blank');
+            });
+
+            // Optional: handle admission form similarly if needed, but not requested.
+            // For now, we just prevent default and give a message.
+            const admissionForm = document.getElementById('admissionForm');
+            admissionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('فرم پذیرش ثبت شد. (در این نسخه، ارسال به واتساپ فقط برای سفارش محصول فعال است)');
+                // You could also redirect to WhatsApp with admission details if desired, but spec said only order.
+            });
+
+        });
+    </script>
+
+    <style>
+        .section-pop {
+            animation: sectionPop 1s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+    </style>
+
+</body>
+</html>
